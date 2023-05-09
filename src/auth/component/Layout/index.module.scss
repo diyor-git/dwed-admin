@@ -1,0 +1,54 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+
+  .leftSide {
+    background: linear-gradient(180deg, #1DA1F2 0%, #003CC5 100%);
+    display: flex;
+    justify-content: center;
+    padding: 60px 30px;
+
+    .content {
+
+      .image {
+        text-align: center;
+        margin: 90px 0 60px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+
+        h1 {
+          color: #fff;
+          font-size: 100px;
+        }
+
+        img {
+          width: 80px;
+          height: 90px;
+        }
+      }
+
+      .bottom {
+        color: #FFFFFF;
+        text-align: center;
+
+        h3 {
+          font-weight: 590;
+          font-size: 28px;
+          line-height: 33px;
+          margin-bottom: 24px;
+        }
+
+        h5 {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+        }
+      }
+    }
+  }
+}

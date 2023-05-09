@@ -1,0 +1,25 @@
+.chooseLang {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .choose {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--blue);
+
+    img {
+      padding-bottom: 10px;
+    }
+
+    h4 {
+      line-height: 24px;
+      padding-bottom: 10px;
+      font-weight: 400;
+      font-size: 16px;
+    }
+
+  }
+}

@@ -1,0 +1,48 @@
+.loginForm {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h4 {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      color: var(--blue);
+    }
+  }
+
+  .sentReq {
+    margin-top: 40px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--gray);
+
+    span {
+      color: var(--blue);
+    }
+  }
+
+  .btn {
+    padding: 16px;
+    background: var(--linear-gradient);
+    color: #fff;
+    border: none;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--linear-gradient-hover);
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "login": "Log in",
+    "signup": "Sign Up",
+    "loginSubText": "Please login to access your account.",
+    "ipAddressField": "Enter IP address",
+    "loginField": "Login",
+    "passwordField": "Password",
+    "remember": "Remember me",
+    "forgetPassword": "Forget password?",
+    "dontHaveWork": "Dont have work?",
+    "sendRequest": "Send request",
+    "ecosystem": "Welcome to Ecosystem of future",
+    "selectCompany": "Please select your company and log in"
+  }
+}
