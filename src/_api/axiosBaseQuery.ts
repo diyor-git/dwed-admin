@@ -13,7 +13,7 @@ function axiosBaseQuery({ baseUrl } = { baseUrl: "" }) {
   return async ({ url, method, data, params, headers }: AxiosType) => {
     const token = "";
     const axiosInstance = axios.create({
-      baseURL: baseUrl,
+      baseURL: "http://89.236.219.215:4000/",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json;charset=UTF-8",

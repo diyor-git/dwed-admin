@@ -1,5 +1,12 @@
+import { Layout } from "./components";
+import Router from "./routes/Router.tsx";
+
 function Admin() {
-  return <h1>Admin</h1>;
+  return (
+    <Layout>
+      <Router />
+    </Layout>
+  );
 }
 
 export default Admin;

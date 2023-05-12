@@ -1,0 +1,66 @@
+.layout {
+  display: grid;
+  grid-template-columns: 255px 1fr;
+  height: 100vh;
+
+  .content {
+    margin: 16px;
+    padding: 16px;
+    height: 90vh;
+    background: #FFF;
+    border-radius: 10px;
+  }
+
+  .header {
+    margin: 0 16px 16px 0;
+    padding: 19px 24px;
+    background: #fff;
+  }
+
+  .sidebar {
+    background: #262626;
+    color: #7F92A0;
+    padding: 16px;
+
+    .list {
+
+      .listIcon {
+        min-width: 37px;
+
+        svg {
+          color: #7F92A0;
+        }
+      }
+    }
+
+    .logo {
+      margin-top: 16px;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      color: #fff;
+
+      h3 {
+        font-size: 18px;
+      }
+
+      img {
+        width: 21px;
+        height: 24px;
+      }
+    }
+  }
+}
+
+.collapseLink {
+  padding: 8px 16px;
+
+}
+
+.link {
+
+  span, svg {
+    color: #7F92A0 !important;
+  }
+}

@@ -1,9 +1,8 @@
 import { useTranslation } from "react-i18next";
 import styles from "./index.module.scss";
 import LoginForm from "./components/LoginForm";
-import ChooseLang from "../../component/ChooseLang";
-import ErrorAlert from "../../component/ErrorAlert";
 import { useSignInMutation } from "../../api/auth.ts";
+import { ChooseLang, ErrorAlert } from "../../component";
 
 function Login() {
   const { t } = useTranslation();

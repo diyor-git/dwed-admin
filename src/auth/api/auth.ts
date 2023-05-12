@@ -4,14 +4,7 @@ export const authApi = authCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     signIn: build.mutation({
       query: ({ login, password, ipAddress }: any) => ({
-        url: "/auth/signin",
-        method: "POST",
-        data: { login, password, ipAddress },
-      }),
-    }),
-    signUp: build.mutation({
-      query: ({ login, password, ipAddress }: any) => ({
-        url: "/auth/signin",
+        url: "/UMS/api/v1.0/business/accounts",
         method: "POST",
         data: { login, password, ipAddress },
       }),
@@ -19,4 +12,4 @@ export const authApi = authCreatedApi.injectEndpoints({
   }),
 });
 
-export const { useSignInMutation, useSignUpMutation } = authApi;
+export const { useSignInMutation } = authApi;
