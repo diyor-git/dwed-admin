@@ -8,7 +8,7 @@ function Router() {
       <Route index path="/*" element={<Navigate to="/404" />} />
       <Route path="regions" element={<Outlet />}>
         <Route index element={<Regions />} />
-        <Route path="/add" element={<AddRegion />} />
+        <Route path="add" element={<AddRegion />} />
       </Route>
     </Routes>
   );
