@@ -30,7 +30,6 @@ function Links({ text, icon, collapseTexts }: any) {
           <Link className={styles.link} to={el.to}>
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon>{el.icon}</ListItemIcon>
                 <ListItemText primary={el.text} />
               </ListItemButton>
             </List>

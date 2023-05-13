@@ -1,5 +1,5 @@
-import { Layout } from "./components";
 import Router from "./routes/Router.tsx";
+import { Layout } from "../_components";
 
 function Admin() {
   return (

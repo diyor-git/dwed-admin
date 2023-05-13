@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;700&display=swap');
 @import "colors.scss";
 
 * {
@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Golos Text', sans-serif;
   background: #F7F8FC;
 }
 
@@ -30,4 +30,9 @@ a {
   .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
     border: 2px solid #FF5A5F !important;
   }
+}
+
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  max-width: 870px !important;
 }

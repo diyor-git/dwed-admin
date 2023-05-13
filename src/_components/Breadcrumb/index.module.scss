@@ -1,0 +1,18 @@
+.breadcrubm {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  span:last-child {
+    display: none;
+  }
+  h4 {
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 32px;
+    color: #7F92A0;
+
+  }
+    h4:last-child {
+      color: #000 !important;
+    }
+}
