@@ -1,23 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import axios from "axios";
 
-interface AxiosType {
-  url: string;
-  method: string;
-  data: any;
-  params: string;
-  headers: any;
-}
-
-function axiosBaseQuery({ baseUrl } = { baseUrl: "" }) {
-  return async ({ url, method, data, params, headers }: AxiosType) => {
-    const token = "";
+function axiosBaseQuery({ Authorization }: any) {
+  return async ({ url, method, data, params, headers }: any) => {
     const axiosInstance = axios.create({
       baseURL: "http://89.236.219.215:4000/",
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
+        Authorization,
       },
     });
 

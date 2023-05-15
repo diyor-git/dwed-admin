@@ -36,3 +36,10 @@ a {
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
   max-width: 870px !important;
 }
+
+
+.css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background-color: var(--blue) !important;
+  border: 1px solid var(--blue);
+  color: #fff;
+}

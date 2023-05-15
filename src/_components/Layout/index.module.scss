@@ -1,12 +1,12 @@
 .layout {
   display: grid;
   grid-template-columns: 255px 80vw;
-  height: 100vh;
+  min-height: 100vh;
 
   .content {
     margin: 16px;
     padding: 16px;
-    height: 90vh;
+    min-height: 90vh;
     background: #FFF;
     border-radius: 10px;
   }
@@ -59,8 +59,22 @@
 }
 
 .link {
-
   span, svg {
     color: #7F92A0 !important;
+  }
+}
+
+.active {
+  span {
+    color: #fff !important;
+    position: relative;
+
+    &:before {
+      contain: "we";
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      color: #fff;
+    }
   }
 }

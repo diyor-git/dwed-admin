@@ -45,7 +45,7 @@ function LoginForm({ onSubmit, isSuccess, isLoading }: any) {
       </FormGroup>
       <FormGroup>
         <FormControlValidate
-          fieldName="login"
+          fieldName="username"
           type="text"
           controls={formControls}
           label={t("auth.loginField")}

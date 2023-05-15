@@ -60,3 +60,30 @@ $color-form-highlight: #EEEEEE;
     content: '(asc)';
   }
 }
+
+.tableData {
+  position: relative;
+  i {
+    cursor: pointer;
+  }
+}
+.actions {
+  display: none;
+  button {
+    border: none;
+    padding: 10px 20px;
+    color: #1DA1F2;
+  }
+}
+.activeActions {
+  display: block !important;
+  position: absolute;
+  left: 10%;
+  top: -40%;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 50px;
+}

@@ -3,10 +3,11 @@ import { createApi } from "@reduxjs/toolkit/query";
 // eslint-disable-next-line import/extensions
 import axiosBaseQuery from "./axiosBaseQuery";
 
+const token = localStorage.getItem("accessToken");
 const generalCreatedApi = createApi({
   reducerPath: "generalApi",
   baseQuery: axiosBaseQuery({
-    baseUrl: `/api/v1`,
+    Authorization: `Bearer ${token}`,
   }),
   endpoints: () => ({}),
 });

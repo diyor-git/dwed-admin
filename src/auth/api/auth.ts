@@ -1,12 +1,16 @@
 import authCreatedApi from "./index.ts";
 
+type LoginType = {
+  username: string;
+  password: string;
+}
 export const authApi = authCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     signIn: build.mutation({
-      query: ({ login, password, ipAddress }: any) => ({
-        url: "/UMS/api/v1.0/business/accounts",
+      query: ({ username, password }: LoginType) => ({
+        url: "/UMS/api/v1.0/account/auth/?login_params=username_password",
         method: "POST",
-        data: { login, password, ipAddress },
+        data: { username, password },
       }),
     }),
   }),

@@ -11,7 +11,7 @@ function Router() {
         <Route index element={<Regions />} />
         <Route path=":id" element={<Outlet />}>
           <Route index element={<Subcategory />} />
-          <Route path=":id" element={<FinalCategory />} />
+          <Route index path=":id" element={<FinalCategory />} />
         </Route>
       </Route>
     </Routes>

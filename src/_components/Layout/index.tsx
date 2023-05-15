@@ -42,7 +42,11 @@ function Layout({ children }: any) {
                 to: "/admin/regions",
                 text: "Region List",
               },
-              { icon: <WidgetsIcon />, to: "", text: "Type of  region" },
+              {
+                icon: <WidgetsIcon />,
+                to: "/admin/regions/id",
+                text: "Type of  region",
+              },
             ]}
           />
         </List>

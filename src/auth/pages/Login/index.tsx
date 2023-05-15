@@ -1,15 +1,17 @@
 import { useTranslation } from "react-i18next";
 import styles from "./index.module.scss";
 import LoginForm from "./components/LoginForm";
-import { useSignInMutation } from "../../api/auth.ts";
-import { ChooseLang, ErrorAlert } from "../../component";
+import { ChooseLang } from "../../component";
+import useAuth from "../../../_utils/hooks/useAuth.tsx";
+import { ErrorAlert } from "../../../_components";
 
 function Login() {
   const { t } = useTranslation();
-  const [signInData, { error, isSuccess, isLoading }] = useSignInMutation();
 
-  const onSubmit = ({ ipAddress, password, login }: any) => {
-    signInData({ ipAddress, password, login });
+  const { signInData, error, isLoading, isSuccess } = useAuth();
+
+  const onSubmit = ({ password, username }: any) => {
+    signInData({ password, username });
   };
 
   return (

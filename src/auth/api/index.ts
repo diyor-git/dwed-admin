@@ -4,9 +4,9 @@ import axiosBaseQuery from "../../_api/axiosBaseQuery.ts";
 const authCreatedApi = createApi({
   reducerPath: "authApi",
   baseQuery: axiosBaseQuery({
-    baseUrl: ``,
+    Authorization: null,
   }),
-  tagTypes: ["Users", "User"],
+  tagTypes: ["User"],
   endpoints: () => ({}),
 });
 
