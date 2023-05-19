@@ -39,13 +39,29 @@ function Layout({ children }: any) {
             collapseTexts={[
               {
                 icon: <WidgetsIcon />,
-                to: "/admin/regions",
+                to: "/admin/regions/",
                 text: "Region List",
               },
               {
                 icon: <WidgetsIcon />,
-                to: "/admin/regions/id",
-                text: "Type of  region",
+                to: "/admin/regions/type/",
+                text: "Type of region",
+              },
+            ]}
+          />
+          <Links
+            text="Quiz"
+            icon={<i className="fa-solid fa-box-open" />}
+            collapseTexts={[
+              {
+                icon: <WidgetsIcon />,
+                to: "/admin/quiz/",
+                text: "Quiz List",
+              },
+              {
+                icon: <WidgetsIcon />,
+                to: "/admin/quiz/type/",
+                text: "Type of quiz",
               },
             ]}
           />

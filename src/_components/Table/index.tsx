@@ -1,72 +1,36 @@
-// import { DataGrid, GridColDef } from "@mui/x-data-grid";
-// import { Link } from "react-router-dom";
-// import styles from "./index.module.scss";
-//
-// const columns: GridColDef[] = [
-//   { field: "id", headerName: "ID", width: 150 },
-//   {
-//     field: "categoryName",
-//     headerName: "Category name",
-//     width: 450,
-//     renderCell: (params) => (
-//       <Link to={`${params.value}`}>{params.value}</Link>
-//     ),
-//   },
-//   { field: "subcategory", headerName: "Subcategory", width: 250 },
-//   {
-//     field: "status",
-//     headerName: "Status",
-//     width: 150,
-//   },
-//   {
-//     field: "add",
-//     headerName: "Who added",
-//     description: "This column has a value getter and is not sortable.",
-//     sortable: false,
-//     width: 100,
-//     renderCell: (params) => (
-//       <Link to={`${params.value.to}`}>{params.value}</Link>
-//     ),
-//   },
-//   {
-//     field: "actions",
-//     headerName: "",
-//     width: 250,
-//     renderCell: (params) => (
-//       <div>
-//         <i className="fa-solid fa-ellipsis-vertical" />
-//       </div>
-//     ),
-//   },
-// ];
-//
-// function Table({ rows }: any) {
-//   return (
-//     <div className={styles.table}>
-//       <DataGrid
-//         rows={rows}
-//         columns={columns}
-//         initialState={{
-//           pagination: {
-//             paginationModel: { page: 0, pageSize: 5 },
-//           },
-//         }}
-//         pageSizeOptions={[5, 10, 15, 20, 25, 30]}
-//       />
-//     </div>
-//   );
-// }
-//
-// export default Table;
-
-import { Pagination } from "@mui/material";
+import { FormGroup, Pagination } from "@mui/material";
 import styles from "./index.module.scss";
 import Nodata from "./components/Nodata";
 import Item from "./components/Item";
+import FormControlValidate from "../Form/FormControlValidate";
 
-function Table({ rows, disableLinks, handleChangePage, loading }: any) {
+function Table({
+  rows,
+  disableLinks,
+  handleChangePage,
+  loading,
+  handleSubmit,
+  formControls,
+}: any) {
   return (
     <>
+      <div className={styles.search}>
+        <form onSubmit={handleSubmit}>
+          <FormGroup className={styles.input}>
+            <FormControlValidate
+              fieldName="search"
+              type="text"
+              controls={formControls}
+              variant="filled"
+              label="Search by Category Name..."
+            />
+            <i
+              className="fa-solid fa-magnifying-glass"
+              onClick={handleSubmit}
+            />
+          </FormGroup>
+        </form>
+      </div>
       <div className={styles.table}>
         <div className={styles.tableHeader}>
           <div className={styles.headerItem}>

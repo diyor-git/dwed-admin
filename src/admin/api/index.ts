@@ -8,7 +8,7 @@ const regionsCreatedApi = createApi({
   baseQuery: axiosBaseQuery({
     Authorization: `Bearer ${token}`,
   }),
-  tagTypes: ["Regions"],
+  tagTypes: ["Regions", "RegionsType"],
   endpoints: () => ({}),
 });
 

@@ -43,3 +43,12 @@ a {
   border: 1px solid var(--blue);
   color: #fff;
 }
+
+
+// auth/pages/regions
+
+.css-1ff8729-MuiInputBase-root-MuiFilledInput-root {
+  &:before, &:after {
+    display: none !important;
+  }
+}

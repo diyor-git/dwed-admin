@@ -87,3 +87,31 @@ $color-form-highlight: #EEEEEE;
   justify-content: flex-end;
   margin-top: 50px;
 }
+
+
+.search {
+  background: #FBFBFD;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.input {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 20px;
+  border: 1px solid #F2F2F2;
+  border-radius: 8px;
+  flex-direction: inherit !important;
+  padding: 0 20px 0 10px;
+  background: #fff;
+
+  i {
+    cursor: pointer;
+    padding: 5px;
+  }
+  input {
+    border: none;
+    background: #fff !important;
+
+  }
+}

@@ -27,13 +27,15 @@ function Item({
           {disableLinks ? (
             categoryName
           ) : (
-            <Link to={`${id}`}>{categoryName}</Link>
+            <Link to={`${id}/${categoryName}`}>{categoryName}</Link>
           )}
         </div>
-        <div className={styles.tableData}>{subcategory}</div>
-        <div className={styles.tableData}>{status}</div>
+        <div className={styles.tableData}>{subcategory || 0}</div>
         <div className={styles.tableData}>
-          <Link to={`${id}`}>{whoAdded}</Link>
+          {status === 1 ? "Active" : "Deactive"}
+        </div>
+        <div className={styles.tableData}>
+          <Link to={`${id}/${categoryName}`}>{whoAdded}</Link>
         </div>
         <div className={styles.tableData}>
           <div

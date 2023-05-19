@@ -1,6 +1,6 @@
 .layout {
   display: grid;
-  grid-template-columns: 255px 80vw;
+  grid-template-columns: 255px calc(100% - 255px);
   min-height: 100vh;
 
   .content {

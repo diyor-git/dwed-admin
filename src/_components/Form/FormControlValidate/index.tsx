@@ -11,6 +11,7 @@ const FormControlValidate = forwardRef(
       controls,
       addon,
       className,
+      variant,
       isOnlyNumber,
       ...props
     }: any,
@@ -31,7 +32,7 @@ const FormControlValidate = forwardRef(
       <FormControl>
         <TextField
           className={errorTouched && error ? "invalidInput" : ""}
-          variant="outlined"
+          variant={variant || "outlined"}
           ref={ref}
           value={value}
           name={fieldName}

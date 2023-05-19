@@ -1,51 +1,15 @@
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useFormik } from "formik";
 import styles from "../../index.module.scss";
 import { Modal } from "../../components";
 import { Breadcrumb, Table } from "../../../../../_components";
 import { useGetRegionsSubQuery } from "../../../../api/regions.ts";
-
-// const rows = [
-//   {
-//     id: 1,
-//     subcategory: "100 subcategories",
-//     categoryName: "Tashkent",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 2,
-//     subcategory: "100 subcategories",
-//     categoryName: "Tashkent",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 3,
-//     categoryName: "Tashkent",
-//     subcategory: "100 subcategories",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 4,
-//     categoryName: "Tashkent",
-//     subcategory: "100 subcategories",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 5,
-//     subcategory: "100 subcategories",
-//     categoryName: "Tashkent",
-//     status: "active",
-//     whoAdded: "Aziz",
-//   },
-// ];
+import validationSchema from "../../validationSchema.ts";
 
 function Subcategory() {
-  const { id } = useParams();
+  const { id, name } = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -63,6 +27,7 @@ function Subcategory() {
     id,
   });
 
+  // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
     setPage(newPage * 10 - 10);
     setLoading(true);
@@ -74,6 +39,18 @@ function Subcategory() {
     refetch();
   }, [id]);
 
+  const onSubmit = ({ search }: any) => {
+    console.log(search);
+  };
+
+  const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
+    useFormik({
+      initialValues: { search: "" },
+      onSubmit,
+      validationSchema: validationSchema(),
+    });
+  const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
+
   if (isLoading) return <h1>load</h1>;
 
   return (
@@ -83,12 +60,12 @@ function Subcategory() {
         <Breadcrumb
           text={[
             {
-              to: "",
+              to: "/admin/regions",
               text: "Region List",
             },
             {
-              to: "",
-              text: "Uzbekistan",
+              to: `/admin/regions/${id}`,
+              text: name || "",
             },
           ]}
         />
@@ -99,6 +76,8 @@ function Subcategory() {
         </button>
       </div>
       <Table
+        formControls={formControls}
+        handleSubmit={handleSubmit}
         rows={data}
         loading={loading}
         handleChangePage={handleChangePage}

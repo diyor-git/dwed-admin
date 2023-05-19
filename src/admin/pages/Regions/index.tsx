@@ -1,87 +1,15 @@
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
+import { useFormik } from "formik";
 import Table from "../../../_components/Table";
 import styles from "./index.module.scss";
 import { Modal } from "./components";
 import { Breadcrumb } from "../../../_components";
-import { useGetRegionsQuery } from "../../api/regions.ts";
-
-// const rows = [
-//   {
-//     id: 1,
-//     subcategory: "100 subcategories",
-//     categoryName: <Link to={`${1}`}>Uzbekistan</Link>,
-//     status: "active",
-//     add: <Link to={`${1}`}>Diyor</Link>,
-//   },
-//   {
-//     id: 2,
-//     subcategory: "100 subcategories",
-//     categoryName: <Link to={`${1}`}>Uzbekistan</Link>,
-//     status: "active",
-//     add: <Link to={`${1}`}>Diyor</Link>,
-//   },
-//   {
-//     id: 3,
-//     categoryName: <Link to={`${1}`}>Uzbekistan</Link>,
-//     subcategory: "100 subcategories",
-//     status: "active",
-//     add: <Link to={`${1}`}>Diyor</Link>,
-//   },
-//   {
-//     id: 4,
-//     categoryName: <Link to={`${1}`}>Uzbekistan</Link>,
-//     subcategory: "100 subcategories",
-//     status: "active",
-//     add: <Link to={`${1}`}>Diyor</Link>,
-//   },
-//   {
-//     id: 5,
-//     subcategory: "100 subcategories",
-//     categoryName: <Link to={`${1}`}>Uzbekistan</Link>,
-//     status: "active",
-//     whoAdded: "Aziz",
-//     add: <Link to={`${1}`}>Diyor</Link>,
-//   },
-// ];
-
-// const rows = [
-//   {
-//     id: 1,
-//     subcategory: "100 subcategories",
-//     categoryName: "Uzbekistan",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 2,
-//     subcategory: "100 subcategories",
-//     categoryName: "Uzbekistan",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 3,
-//     categoryName: "Uzbekistan",
-//     subcategory: "100 subcategories",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 4,
-//     categoryName: "Uzbekistan",
-//     subcategory: "100 subcategories",
-//     status: "active",
-//     whoAdded: "Diyor",
-//   },
-//   {
-//     id: 5,
-//     subcategory: "100 subcategories",
-//     categoryName: "Uzbekistan",
-//     status: "active",
-//     whoAdded: "Aziz",
-//   },
-// ];
+import {
+  useGetRegionsQuery,
+  useSearchRegionsMutation,
+} from "../../api/regions.ts";
+import validationSchema from "./validationSchema.ts";
 
 function Regions() {
   const [open, setOpen] = useState(false);
@@ -96,7 +24,14 @@ function Regions() {
 
   const [page, setPage] = useState(0);
 
-  const { data, isLoading, refetch } = useGetRegionsQuery({ offset: page });
+  const {
+    data: regions,
+    isLoading,
+    refetch,
+  } = useGetRegionsQuery({ offset: page });
+
+  const [searchRegions] = useSearchRegionsMutation();
+
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
     setPage(newPage * 10 - 10);
@@ -104,6 +39,20 @@ function Regions() {
     await refetch();
     setLoading(false);
   };
+
+  const onSubmit = ({ search }: any) => {
+    console.log(search);
+    searchRegions(search);
+  };
+
+  const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
+    useFormik({
+      initialValues: { search: "" },
+      onSubmit,
+      validationSchema: validationSchema(),
+    });
+
+  const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
   if (isLoading) return <h1>load</h1>;
   return (
@@ -125,7 +74,9 @@ function Regions() {
       </div>
       <div className={styles.table}>
         <Table
-          rows={data}
+          formControls={formControls}
+          handleSubmit={handleSubmit}
+          rows={regions}
           loading={loading}
           handleChangePage={handleChangePage}
         />
