@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import styles from "../../index.module.scss";
-import { useDeleteRegionMutation } from "../../../../admin/api/regions.ts";
 import { ErrorAlert } from "../../../index.ts";
+import { useDeleteRegionMutation } from "../../../../admin/api/regions.ts";
 
 function Item({
   disableLinks,
@@ -17,9 +17,11 @@ function Item({
   const [data, { error }] = useDeleteRegionMutation();
   const deleteRegion = (id: string) => {
     data({ id });
+    setState(false);
   };
   return (
     <>
+      {/* @ts-ignore */}
       <ErrorAlert error={error} />
       <div className={styles.tableRow}>
         <div className={styles.tableData}>{id}</div>
@@ -35,16 +37,13 @@ function Item({
           {status === 1 ? "Active" : "Deactive"}
         </div>
         <div className={styles.tableData}>
-          <Link to={`${id}/${categoryName}`}>{whoAdded}</Link>
+          <Link to={`${id}`}>{whoAdded}</Link>
         </div>
         <div className={styles.tableData}>
           <div
             className={`${styles.actions} ${state ? styles.activeActions : ""}`}
           >
             <button type="button" onClick={() => deleteRegion(id)}>
-              <i className="fa-solid fa-trash" />
-            </button>
-            <button type="button">
               <i className="fa-solid fa-trash" />
             </button>
           </div>

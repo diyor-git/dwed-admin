@@ -55,10 +55,11 @@
 
 .collapseLink {
   padding: 8px 16px;
-
+  cursor: pointer;
 }
 
 .link {
+  cursor: pointer;
   span, svg {
     color: #7F92A0 !important;
   }
@@ -70,7 +71,7 @@
     position: relative;
 
     &:before {
-      contain: "we";
+      contain: "";
       position: absolute;
       width: 2px;
       height: 100%;

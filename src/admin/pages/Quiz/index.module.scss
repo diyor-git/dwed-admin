@@ -1,12 +1,13 @@
-.regions {
+.quiz {
   .header {
     margin-bottom: 24px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-end;
 
 
     button {
+      transform: translateY(-30px);
       display: flex;
       align-items: center;
       gap: 16px;

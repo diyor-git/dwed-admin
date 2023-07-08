@@ -2,35 +2,40 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
 import Table from "../../../_components/Table";
-import styles from "./index.module.scss";
 import { Modal } from "./components";
-import { Breadcrumb } from "../../../_components";
-import {
-  useGetRegionsQuery,
-  useSearchRegionsMutation,
-} from "../../api/regions.ts";
+import { Filter } from "../../../_components";
+import { useGetRegionsQuery } from "../../api/regions.ts";
 import validationSchema from "./validationSchema.ts";
+import styles from "./index.module.scss";
 
 function Regions() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [searchItem, setSearchItem] = useState("");
+  const [, setFilterValue] = useState("");
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
-
-  const [page, setPage] = useState(0);
 
   const {
     data: regions,
     isLoading,
     refetch,
-  } = useGetRegionsQuery({ offset: page });
-
-  const [searchRegions] = useSearchRegionsMutation();
+  } = useGetRegionsQuery({ offset: page, search: searchItem });
 
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
@@ -41,8 +46,7 @@ function Regions() {
   };
 
   const onSubmit = ({ search }: any) => {
-    console.log(search);
-    searchRegions(search);
+    setSearchItem(search);
   };
 
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
@@ -54,19 +58,18 @@ function Regions() {
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
-  if (isLoading) return <h1>load</h1>;
+  if (isLoading) return <div />;
   return (
     <div className={styles.regions}>
-      <Modal open={open} handleClose={handleClose} />
-      <div className={styles.header}>
-        <Breadcrumb
-          text={[
-            {
-              to: "",
-              text: "Region List",
-            },
-          ]}
+      <div>
+        <Modal open={open} handleClose={handleClose} />
+        <Filter
+          open={openFilter}
+          selectedValue={setFilterValue}
+          onClose={handleCloseFilter}
         />
+      </div>
+      <div className={styles.header}>
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
           Add category
@@ -74,10 +77,19 @@ function Regions() {
       </div>
       <div className={styles.table}>
         <Table
+          rowsName={[
+            "ID",
+            "Category name",
+            "Subcategory",
+            "Status",
+            "Who added",
+            "Actions",
+          ]}
           formControls={formControls}
           handleSubmit={handleSubmit}
           rows={regions}
           loading={loading}
+          handleOpenFilter={handleOpenFilter}
           handleChangePage={handleChangePage}
         />
       </div>

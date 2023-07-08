@@ -4,9 +4,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import { ListItemIcon } from "@mui/material";
+import { NavLink } from "react-router-dom";
 import logo from "../../_assets/svg/logo.svg";
 import styles from "./index.module.scss";
 import Links from "./components/Links";
+import Breadcrumb from "../Breadcrumb";
 
 function Layout({ children }: any) {
   return (
@@ -17,24 +19,57 @@ function Layout({ children }: any) {
           <h3>DWED Business</h3>
         </div>
         <List className={styles.list}>
+          {/*<ListItem disablePadding>*/}
+          {/*  <ListItemButton>*/}
+          {/*    <ListItemIcon className={styles.listIcon}>*/}
+          {/*      <WidgetsIcon />*/}
+          {/*    </ListItemIcon>*/}
+          {/*    <ListItemText primary="Home" />*/}
+          {/*  </ListItemButton>*/}
+          {/*</ListItem>*/}
           <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon className={styles.listIcon}>
-                <WidgetsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon className={styles.listIcon}>
-                <i className="fa-solid fa-wallet" />
-              </ListItemIcon>
-              <ListItemText primary="Posts" />
-            </ListItemButton>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? `${styles.active} ${styles.link}` : styles.link
+              }
+              to="orders-status"
+            >
+              <ListItemButton>
+                <ListItemIcon className={styles.listIcon}>
+                  <i className="fa-solid fa-cart-shopping" />
+                </ListItemIcon>
+                <ListItemText primary="Orders status" />
+              </ListItemButton>
+            </NavLink>
           </ListItem>
           <Links
-            text="Region"
+            text="Products"
+            icon={<i className="fa-solid fa-wallet" />}
+            collapseTexts={[
+              {
+                icon: <i className="fa-solid fa-wallet" />,
+                to: "/admin/products/",
+                text: "Products List",
+              },
+              {
+                icon: <WidgetsIcon />,
+                to: "/admin/products/measure/",
+                text: "Unit of measure",
+              },
+              {
+                icon: <WidgetsIcon />,
+                to: "/admin/products/type/",
+                text: "Type of products",
+              },
+              {
+                icon: <WidgetsIcon />,
+                to: "/admin/products/create/",
+                text: "Create product",
+              },
+            ]}
+          />
+          <Links
+            text="Regions"
             icon={<i className="fa-solid fa-box-open" />}
             collapseTexts={[
               {
@@ -69,9 +104,12 @@ function Layout({ children }: any) {
       </div>
       <div>
         <div className={styles.header}>
-          <h3>Region</h3>
+          <h3>DWED</h3>
         </div>
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content}>
+          <Breadcrumb />
+          {children}
+        </div>
       </div>
     </div>
   );

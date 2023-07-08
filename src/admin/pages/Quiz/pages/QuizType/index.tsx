@@ -2,13 +2,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
 import styles from "../../index.module.scss";
-import {
-  useGetRegionsTypeQuery,
-  useSearchRegionsMutation,
-} from "../../../../api/regions.ts";
+import { useGetRegionsTypeQuery } from "../../../../api/regions.ts";
 import validationSchema from "../../validationSchema.ts";
-import { Breadcrumb, Table } from "../../../../../_components";
-import { Modal } from "../../components";
+import { Table } from "../../../../../_components";
+import { ModalV2 } from "../../components";
 
 function QuizType() {
   const [open, setOpen] = useState(false);
@@ -29,8 +26,6 @@ function QuizType() {
     refetch,
   } = useGetRegionsTypeQuery({ offset: page });
 
-  const [searchRegions] = useSearchRegionsMutation();
-
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
     setPage(newPage * 10 - 10);
@@ -41,7 +36,6 @@ function QuizType() {
 
   const onSubmit = ({ search }: any) => {
     console.log(search);
-    searchRegions(search);
   };
 
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
@@ -53,19 +47,11 @@ function QuizType() {
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
-  if (isLoading) return <h1>load</h1>;
+  if (isLoading) return <div />;
   return (
-    <div className={styles.regions}>
-      <Modal open={open} handleClose={handleClose} />
+    <div className={styles.quiz}>
+      <ModalV2 open={open} handleClose={handleClose} />
       <div className={styles.header}>
-        <Breadcrumb
-          text={[
-            {
-              to: "",
-              text: "Region List",
-            },
-          ]}
-        />
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
           Add category

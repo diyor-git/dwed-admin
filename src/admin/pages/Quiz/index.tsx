@@ -3,12 +3,8 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import Table from "../../../_components/Table";
 import { Modal } from "./components";
-import { Breadcrumb } from "../../../_components";
-import {
-  useGetRegionsQuery,
-  useSearchRegionsMutation,
-} from "../../api/regions";
 import validationSchema from "./validationSchema";
+import { useGetQuizQuery } from "../../api/quiz.ts";
 import styles from "./index.module.scss";
 
 function Quiz() {
@@ -24,13 +20,7 @@ function Quiz() {
 
   const [page, setPage] = useState(0);
 
-  const {
-    data: regions,
-    isLoading,
-    refetch,
-  } = useGetRegionsQuery({ offset: page });
-
-  const [searchRegions] = useSearchRegionsMutation();
+  const { data: quiz, isLoading, refetch } = useGetQuizQuery({ offset: page });
 
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
@@ -42,7 +32,6 @@ function Quiz() {
 
   const onSubmit = ({ search }: any) => {
     console.log(search);
-    searchRegions(search);
   };
 
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
@@ -54,19 +43,11 @@ function Quiz() {
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
-  if (isLoading) return <h1>load</h1>;
+  if (isLoading) return <div />;
   return (
-    <div className={styles.regions}>
+    <div className={styles.quiz}>
       <Modal open={open} handleClose={handleClose} />
       <div className={styles.header}>
-        <Breadcrumb
-          text={[
-            {
-              to: "",
-              text: "Quiz",
-            },
-          ]}
-        />
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
           Add category
@@ -74,9 +55,17 @@ function Quiz() {
       </div>
       <div className={styles.table}>
         <Table
+          rowsName={[
+            "ID",
+            "Category name",
+            "Subcategory",
+            "Status",
+            "Who added",
+            "Action",
+          ]}
           formControls={formControls}
           handleSubmit={handleSubmit}
-          rows={regions}
+          rows={quiz}
           loading={loading}
           handleChangePage={handleChangePage}
         />

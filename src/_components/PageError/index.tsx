@@ -22,6 +22,7 @@ function PageError() {
         <h1>
           {t("error-page-title")} {status}
         </h1>
+        {/* @ts-ignore */}
         <h1>{getStatusText(+status)}</h1>
       </div>
       <Link to="/">

@@ -11,6 +11,8 @@ function Table({
   loading,
   handleSubmit,
   formControls,
+  handleOpenFilter,
+  rowsName,
 }: any) {
   return (
     <>
@@ -30,27 +32,19 @@ function Table({
             />
           </FormGroup>
         </form>
+        <button type="button" onClick={handleOpenFilter}>
+          Filter
+          <i className="fa-solid fa-angle-down" />
+        </button>
       </div>
       <div className={styles.table}>
         <div className={styles.tableHeader}>
-          <div className={styles.headerItem}>
-            <h3 className={styles.filterLink}>ID</h3>
-          </div>
-          <div className={styles.headerItem}>
-            <h3 className={styles.filterLink}>Category name</h3>
-          </div>
-          <div className={styles.headerItem}>
-            <h3 className={styles.filterLink}>Subcategory</h3>
-          </div>
-          <div className={styles.headerItem}>
-            <h3 className={styles.filterLink}>Status</h3>
-          </div>
-          <div className={styles.headerItem}>
-            <h3 className={styles.filterLink}>Who added</h3>
-          </div>
-          <div className={styles.headerItem}>
-            <h3 className={styles.filterLink}>Actions</h3>
-          </div>
+          {rowsName &&
+            rowsName.map((title: string) => (
+              <div className={styles.headerItem}>
+                <h3 className={styles.filterLink}>{title}</h3>
+              </div>
+            ))}
         </div>
         <div className={styles.tableContent}>
           {!rows?.results?.length ? (
@@ -64,10 +58,12 @@ function Table({
                   key={el.id}
                   disableLinks={disableLinks}
                   id={el.id}
+                  name={el.name}
+                  participantCount={el.participant_count}
                   categoryName={el.name}
                   subcategory={el.child_number}
                   status={el.status}
-                  whoAdded={el.whoAdded}
+                  whoAdded={el.creator}
                 />
               );
             })

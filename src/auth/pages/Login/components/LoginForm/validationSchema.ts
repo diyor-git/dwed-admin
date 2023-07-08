@@ -2,7 +2,8 @@ import * as Yup from "yup";
 
 function validationSchema() {
   return Yup.object().shape({
-    categoryName: Yup.string().required(),
+    username: Yup.string().required(),
+    password: Yup.string().required(),
   });
 }
 

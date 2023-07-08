@@ -1,17 +1,14 @@
-.breadcrubm {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  span {
-  }
-  h4 {
-    font-weight: 600;
-    font-size: 19px;
-    line-height: 32px;
-    color: #7F92A0;
+.span {
+  font-weight: 600;
+  font-size: 23px;
+  line-height: 32px;
+  color: #7F92A0;
 
+  &:last-of-type {
+    color: #262626;
   }
-    h4:last-child {
-      color: #000 !important;
-    }
+}
+
+.breadcrumb {
+  margin-top: 30px;
 }

@@ -1,7 +1,8 @@
-import { lazy, Suspense } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Page404, PageError } from "./_components";
+import { useAccountQuery } from "./auth/api/auth.ts";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
@@ -9,6 +10,17 @@ const Auth = lazy(() => import("./auth"));
 const Admin = lazy(() => import("./admin"));
 
 function App() {
+  const token = localStorage.getItem("accessToken");
+  const { error }: any = useAccountQuery({ token });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error && error?.status === 401) {
+      navigate("auth/login");
+    } else if (window.location.pathname === "/auth/login") {
+      navigate("admin/regions");
+    }
+  }, [error]);
   return (
     <div className="App">
       <ToastContainer />

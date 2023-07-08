@@ -11,7 +11,9 @@ function useAuth() {
     if (isSuccess) {
       localStorage.setItem("accessToken", data.access);
       localStorage.setItem("refreshToken", data.refresh);
-      navigate("/admin/regions");
+      setTimeout(() => {
+        navigate("/admin/regions");
+      }, 300);
     }
   }, [isSuccess]);
 

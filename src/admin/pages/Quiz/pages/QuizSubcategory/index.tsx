@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { Modal } from "../../components";
-import { Breadcrumb, Table } from "../../../../../_components";
+import { Table } from "../../../../../_components";
 import { useGetRegionsSubQuery } from "../../../../api/regions";
 import validationSchema from "../../validationSchema";
 import styles from "../../index.module.scss";
 
 function QuizSubcategory() {
-  const { id, name } = useParams();
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -51,31 +51,19 @@ function QuizSubcategory() {
     });
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
-  if (isLoading) return <h1>load</h1>;
+  if (isLoading) return <div />;
 
   return (
     <div className={styles.regions}>
       <Modal open={open} handleClose={handleClose} />
       <div className={styles.header}>
-        <Breadcrumb
-          text={[
-            {
-              to: "/admin/regions",
-              text: "Region List",
-            },
-            {
-              to: `/admin/regions/${id}`,
-              text: name || "",
-            },
-          ]}
-        />
-
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
           Add category
         </button>
       </div>
       <Table
+        rowsName={["ID", "Name", "Subcategory", "Restart count", "Who added"]}
         formControls={formControls}
         handleSubmit={handleSubmit}
         rows={data}

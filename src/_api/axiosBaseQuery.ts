@@ -3,7 +3,7 @@ import axios from "axios";
 function axiosBaseQuery({ Authorization }: any) {
   return async ({ url, method, data, params, headers }: any) => {
     const axiosInstance = axios.create({
-      baseURL: "http://89.236.219.215:4000/",
+      baseURL: "http://81.95.236.123:4000/",
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
         Authorization,

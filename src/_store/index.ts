@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import authCreatedApi from "../auth/api";
-import regionsCreatedApi from "../admin/api";
+import adminCreatedApi from "../admin/api";
 
 const reducers = combineReducers({
   [authCreatedApi.reducerPath]: authCreatedApi.reducer,
-  [regionsCreatedApi.reducerPath]: regionsCreatedApi.reducer,
+  [adminCreatedApi.reducerPath]: adminCreatedApi.reducer,
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -17,7 +17,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authCreatedApi.middleware,
-      regionsCreatedApi.middleware
+      adminCreatedApi.middleware
     ),
 });
 

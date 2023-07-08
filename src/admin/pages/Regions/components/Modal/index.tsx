@@ -1,17 +1,22 @@
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
+  Tab,
+  Tabs,
 } from "@mui/material";
 import { useFormik } from "formik";
-import validationSchema from "../../../../../auth/pages/Login/components/LoginForm/validationSchema.ts";
+import { useState } from "react";
 import styles from "./index.module.scss";
-import FormControlValidate from "../../../../../_components/Form/FormControlValidate";
+import {
+  useCreateRegionMutation,
+  useGetRegionsQuery,
+  useGetRegionsTypeQuery,
+} from "../../../../api/regions.ts";
+import validationSchema from "./validationSchema.ts";
+import { ModalFormGroup } from "./components";
 
 const initialValues = {
   categoryName: "",
@@ -20,9 +25,15 @@ const initialValues = {
 };
 
 function Modal({ open, handleClose }: any) {
-  const onSubmit = ({ categoryName, categoryOfCategory, regionType }) => {
-    console.log(categoryName, categoryOfCategory, regionType);
-    handleClose()
+  const [createRegion] = useCreateRegionMutation();
+  const onSubmit = ({ categoryName, categoryOfCategory, regionType }: any) => {
+    createRegion({
+      name: categoryName,
+      parent: categoryOfCategory,
+      type: regionType,
+      status: 0,
+    });
+    handleClose();
   };
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
     useFormik({
@@ -32,7 +43,23 @@ function Modal({ open, handleClose }: any) {
     });
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
+  const { data: regionsType, isLoading } = useGetRegionsTypeQuery({
+    offset: 0,
+    search: "",
+  });
+  const { data: regions, isLoading: loading } = useGetRegionsQuery({
+    offset: 0,
+    search: "",
+  });
 
+  const [value, setValue] = useState(0);
+
+  // @ts-ignore
+  const handleChange = (event: any, newValue: number) => {
+    setValue(newValue);
+  };
+
+  if (isLoading && loading) return <div />;
   return (
     <Dialog
       className={styles.modal}
@@ -41,61 +68,65 @@ function Modal({ open, handleClose }: any) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <form onSubmit={handleSubmit}>
-        <DialogTitle>Health & Care</DialogTitle>
-        <DialogContent className={styles.content}>
-          <div className={styles.languages}>
-            <h4>Uzbek</h4>
-            <h4>Russian</h4>
-            <h4>Korean</h4>
-          </div>
-          <div className={styles.form}>
-            <h4>Category Information</h4>
-            <div className={styles.inputs}>
-              <div className={styles.select}>
-                <FormControl fullWidth className={styles.firstSelect}>
-                  <FormControlValidate
-                    label="Category Name"
-                    fieldName="categoryName"
-                    controls={formControls}
-                  />
-                </FormControl>
-              </div>
-              <div className={styles.formBottom}>
-                <div className={styles.select}>
-                  <FormControl fullWidth>
-                    <InputLabel>Category of category</InputLabel>
-                    <Select
-                      name="categoryOfCategory"
-                      label="Category of category"
-                    >
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className={styles.select}>
-                  <FormControl fullWidth>
-                    <InputLabel>Region type</InputLabel>
-                    <Select label="Region type" name="regionType">
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-              </div>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }} />
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>Health & Care</DialogTitle>
+          <DialogContent className={styles.content}>
+            <div className={styles.languages}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Uzbek" {...a11yProps(0)} />
+              </Tabs>
             </div>
-          </div>
-        </DialogContent>
-        <DialogActions className={styles.btns}>
-          <button type="reset">Cancel</button>
-          <button type="submit">Save</button>
-        </DialogActions>
-      </form>
+            <CustomTabPanel value={value} index={0}>
+              <div className={styles.form}>
+                <h4>Category Information</h4>
+                <ModalFormGroup
+                  formControls={formControls}
+                  regions={regions}
+                  regionsType={regionsType}
+                />
+              </div>
+              <DialogActions className={styles.btns}>
+                {/* eslint-disable-next-line react/button-has-type */}
+                <button type="reset" onClick={handleClose}>
+                  Cancel
+                </button>
+                <button type="submit">Save</button>
+              </DialogActions>
+            </CustomTabPanel>
+          </DialogContent>
+        </form>
+      </Box>
     </Dialog>
   );
+}
+
+function CustomTabPanel(props: any) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }
 
 export default Modal;

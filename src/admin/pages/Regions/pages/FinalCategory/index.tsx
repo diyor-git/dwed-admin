@@ -3,20 +3,30 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { Modal } from "../../components";
-import { Breadcrumb, Table } from "../../../../../_components";
+import { Filter, Table } from "../../../../../_components";
 import validationSchema from "../../validationSchema.ts";
 import styles from "../../index.module.scss";
 import { useGetRegionsFinalQuery } from "../../../../api/regions.ts";
 
 function FinalCategory() {
-  const { name, subname, id } = useParams();
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
+  const [searchItem, setSearchItem] = useState("");
+  const [, setFilterValue] = useState("");
+  const [openFilter, setOpenFilter] = useState(false);
 
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
   const { data, isLoading, refetch } = useGetRegionsFinalQuery({
     offset: page,
     id,
+    search: searchItem,
   });
 
   // @ts-ignore
@@ -36,7 +46,7 @@ function FinalCategory() {
   };
 
   const onSubmit = ({ search }: any) => {
-    console.log(search);
+    setSearchItem(search);
   };
 
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
@@ -46,40 +56,38 @@ function FinalCategory() {
       validationSchema: validationSchema(),
     });
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
-  if (isLoading) return <h1>load</h1>;
+  if (isLoading) return <div />;
 
   return (
     <div className={styles.regions}>
       <Modal open={open} handleClose={handleClose} />
+      <Filter
+        open={openFilter}
+        selectedValue={setFilterValue}
+        onClose={handleCloseFilter}
+      />
       <div className={styles.header}>
-        <Breadcrumb
-          text={[
-            {
-              to: "/admin/regions",
-              text: "Region List",
-            },
-            {
-              to: `/admin/regions/${id}`,
-              text: name || "",
-            },
-            {
-              to: "",
-              text: subname || "",
-            },
-          ]}
-        />
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
           Add category
         </button>
       </div>
       <Table
+        rowsName={[
+          "ID",
+          "Category name",
+          "Subcategory",
+          "Status",
+          "Who added",
+          "Actions",
+        ]}
         formControls={formControls}
         handleSubmit={handleSubmit}
         rows={data}
         disableLinks
         loading={loading}
         handleChangePage={handleChangePage}
+        handleOpenFilter={handleOpenFilter}
       />
     </div>
   );

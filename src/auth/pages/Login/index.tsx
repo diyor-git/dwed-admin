@@ -16,6 +16,7 @@ function Login() {
 
   return (
     <div className={styles.login}>
+      {/* @ts-ignore */}
       <ErrorAlert error={error} />
       <div className={styles.header}>
         <ChooseLang />

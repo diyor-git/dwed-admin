@@ -3,7 +3,7 @@ import authCreatedApi from "./index.ts";
 type LoginType = {
   username: string;
   password: string;
-}
+};
 export const authApi = authCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     signIn: build.mutation({
@@ -13,7 +13,15 @@ export const authApi = authCreatedApi.injectEndpoints({
         data: { username, password },
       }),
     }),
+    account: build.query({
+      query: ({ token }: any) => ({
+        url: "/UMS/api/v1.0/account/",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useSignInMutation } = authApi;
+export const { useSignInMutation, useAccountQuery } = authApi;
