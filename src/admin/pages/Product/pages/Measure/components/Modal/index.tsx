@@ -12,22 +12,16 @@ import { useState } from "react";
 import styles from "./index.module.scss";
 import validationSchema from "./validationSchema.ts";
 import { ModalFormGroup } from "./components";
+import { useCreateProductsMeasureMutation } from "../../../../../../api/products.ts";
 
 const initialValues = {
-  categoryName: "",
-  categoryOfCategory: "",
-  regionType: "",
+  name: "",
 };
 
 function Modal({ open, handleClose }: any) {
-  const [createRegion] = useCreateRegionMutation();
-  const onSubmit = ({ categoryName, categoryOfCategory, regionType }: any) => {
-    createRegion({
-      name: categoryName,
-      parent: categoryOfCategory,
-      type: regionType,
-      status: 0,
-    });
+  const [createMeasure] = useCreateProductsMeasureMutation();
+  const onSubmit = ({ name }: any) => {
+    createMeasure({ name });
     handleClose();
   };
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =

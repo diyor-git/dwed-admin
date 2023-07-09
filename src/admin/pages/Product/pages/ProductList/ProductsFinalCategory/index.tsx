@@ -3,9 +3,10 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { Modal } from "../../../components";
-import { Filter, Table } from "../../../../../../_components";
+import { Filter } from "../../../../../../_components";
 import validationSchema from "../../../validationSchema.ts";
 import { useGetProductsFinalQuery } from "../../../../../api/products.ts";
+import { Table } from "./components";
 import styles from "../../../index.module.scss";
 
 function ProductFinalCategory() {

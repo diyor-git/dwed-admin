@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import styles from "../../../index.module.scss";
-import { Modal } from "../../../components";
-import { Filter, Table } from "../../../../../../_components";
+import {Modal, Table} from "../../../components";
+import { Filter } from "../../../../../../_components";
 import validationSchema from "../../../validationSchema.ts";
 import { useGetProductsSubQuery } from "../../../../../api/products.ts";
 

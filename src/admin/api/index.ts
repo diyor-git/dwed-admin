@@ -8,7 +8,14 @@ const adminCreatedApi = createApi({
   baseQuery: axiosBaseQuery({
     Authorization: `Bearer ${token}`,
   }),
-  tagTypes: ["Regions", "RegionsType", "Quiz", "Products", "OrderStatus"],
+  tagTypes: [
+    "Regions",
+    "RegionsType",
+    "Quiz",
+    "Products",
+    "ProductsMeasure",
+    "OrderStatus",
+  ],
   endpoints: () => ({}),
 });
 

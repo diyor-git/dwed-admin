@@ -75,7 +75,15 @@ export const productsApi = regionsCreatedApi.injectEndpoints({
       query: ({ search = "", offset = "", limit = 10 }) => ({
         url: `/PMS/api/v1.0/admin/product_unit/?limit=${limit}&offset=${offset}&search=${search}`,
       }),
-      providesTags: ["Products"],
+      providesTags: ["ProductsMeasure"],
+    }),
+    createProductsMeasure: build.mutation({
+      query: ({ name }) => ({
+        url: `/PMS/api/v1.0/admin/product_unit/`,
+        method: "POST",
+        data: { name },
+      }),
+      invalidatesTags: ["ProductsMeasure"],
     }),
     getProductsManufacture: build.query({
       query: ({ limit = 10 }) => ({
@@ -90,6 +98,7 @@ export const {
   useGetProductsQuery,
   useCreateProductMutation,
   useDeleteProductMutation,
+  useCreateProductsMeasureMutation,
   useGetProductsFinalQuery,
   useGetProductsManufactureQuery,
   useGetProductsTypeQuery,

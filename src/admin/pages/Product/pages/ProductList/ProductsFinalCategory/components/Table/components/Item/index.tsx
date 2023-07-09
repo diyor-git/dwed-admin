@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import styles from "../../index.module.scss";
-import { ErrorAlert } from "../../../../../../../_components";
-import { useDeleteProductMutation } from "../../../../../../api/products.ts";
+import { ErrorAlert } from "../../../../../../../../../../_components";
+import { useDeleteProductMutation } from "../../../../../../../../../api/products.ts";
 
 function Item({
   disableLinks,
@@ -15,8 +15,7 @@ function Item({
   const [state, setState] = useState(false);
 
   const [data, { error }] = useDeleteProductMutation();
-  // eslint-disable-next-line no-shadow
-  const deleteProduct = (id: string) => {
+  const deleteRegion = (id: string) => {
     data({ id });
     setState(false);
   };
@@ -44,7 +43,7 @@ function Item({
           <div
             className={`${styles.actions} ${state ? styles.activeActions : ""}`}
           >
-            <button type="button" onClick={() => deleteProduct(id)}>
+            <button type="button" onClick={() => deleteRegion(id)}>
               <i className="fa-solid fa-trash" />
             </button>
           </div>

@@ -1,16 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import {Modal, Table} from "./components";
-import { Filter } from "../../../_components";
-import validationSchema from "./validationSchema.ts";
-import styles from "./index.module.scss";
-import { useGetProductsQuery } from "../../api/products.ts";
+import styles from "../../../index.module.scss";
+import {Modal, Table} from "../../../components";
+import { Filter } from "../../../../../../_components";
+import validationSchema from "../../../validationSchema.ts";
+import { useGetProductsSubQuery } from "../../../../../api/products.ts";
 
-function Products() {
+function UnitOfMeasure() {
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
   const [searchItem, setSearchItem] = useState("");
   const [, setFilterValue] = useState("");
   const [openFilter, setOpenFilter] = useState(false);
@@ -21,20 +22,20 @@ function Products() {
   const handleOpenFilter = () => {
     setOpenFilter(true);
   };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
 
-  const {
-    data: products,
-    isLoading,
-    refetch,
-  } = useGetProductsQuery({ offset: page, search: searchItem });
+  const [page, setPage] = useState(0);
+
+  const { data, isLoading, refetch } = useGetProductsSubQuery({
+    offset: page,
+    id,
+    search: searchItem,
+  });
 
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
@@ -43,6 +44,10 @@ function Products() {
     await refetch();
     setLoading(false);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [id]);
 
   const onSubmit = ({ search }: any) => {
     setSearchItem(search);
@@ -54,38 +59,34 @@ function Products() {
       onSubmit,
       validationSchema: validationSchema(),
     });
-
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
   if (isLoading) return <div />;
+
   return (
-    <div className={styles.products}>
-      <div>
-        <Modal open={open} handleClose={handleClose} />
-        <Filter
-          open={openFilter}
-          selectedValue={setFilterValue}
-          onClose={handleCloseFilter}
-        />
-      </div>
+    <div className={styles.regions}>
+      <Modal open={open} handleClose={handleClose} />
+      <Filter
+        open={openFilter}
+        selectedValue={setFilterValue}
+        onClose={handleCloseFilter}
+      />
       <div className={styles.header}>
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
           Add category
         </button>
       </div>
-      <div className={styles.table}>
-        <Table
-          formControls={formControls}
-          handleSubmit={handleSubmit}
-          rows={products}
-          loading={loading}
-          handleOpenFilter={handleOpenFilter}
-          handleChangePage={handleChangePage}
-        />
-      </div>
+      <Table
+        formControls={formControls}
+        handleSubmit={handleSubmit}
+        rows={data}
+        loading={loading}
+        handleChangePage={handleChangePage}
+        handleOpenFilter={handleOpenFilter}
+      />
     </div>
   );
 }
 
-export default Products;
+export default UnitOfMeasure;

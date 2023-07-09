@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import styles from "../../index.module.scss";
-import { useDeleteRegionMutation } from "../../../../../../api/regions.ts";
 import { ErrorAlert } from "../../../../../../../_components";
+import { useDeleteRegionMutation } from "../../../../../../api/regions.ts";
 
 function Item({ disableLinks, id, categoryName }: any) {
   const [state, setState] = useState(false);
 
   const [data, { error }] = useDeleteRegionMutation();
-  const deleteRegion = () => {
+  const deleteProduct = () => {
     data({ id });
     setState(false);
   };
@@ -29,7 +29,7 @@ function Item({ disableLinks, id, categoryName }: any) {
           <div
             className={`${styles.actions} ${state ? styles.activeActions : ""}`}
           >
-            <button type="button" onClick={deleteRegion}>
+            <button type="button" onClick={deleteProduct}>
               <i className="fa-solid fa-trash" />
             </button>
           </div>
