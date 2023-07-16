@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import {
+  ImageUpload,
   MainInfo,
   OfferCharacters,
   OfferCode,
@@ -10,7 +11,7 @@ import {
   QuickAction,
 } from "./components";
 import styles from "./index.module.scss";
-import { UploadImg } from "../../../../../_components/Form";
+import { DragDropFiles } from "../../../../../_components/Form";
 import validationSchema from "./validationSchema.ts";
 import { useCreateProductMutation } from "../../../../api/products.ts";
 
@@ -28,7 +29,7 @@ const initialValuesLogin = {
 function CreateProduct() {
   const [create] = useCreateProductMutation();
   const onSubmit = (data: any) => {
-    console.log(data)
+    console.log(data);
     create(data);
   };
 
@@ -84,7 +85,11 @@ function CreateProduct() {
             expanded={expanded}
             formControls={formControls}
           />
-          <UploadImg />
+          <ImageUpload
+            handleChange={handleChange}
+            expanded={expanded}
+            formControls={formControls}
+          />
         </div>
         <div className={styles.quichAction}>
           <QuickAction expanded={expanded} handleChange={handleChangeBtn} />

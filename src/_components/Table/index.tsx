@@ -59,11 +59,9 @@ function Table({
                   disableLinks={disableLinks}
                   id={el.id}
                   name={el.name}
-                  participantCount={el.participant_count}
                   categoryName={el.name}
                   subcategory={el.child_number}
                   status={el.status}
-                  whoAdded={el.creator}
                 />
               );
             })

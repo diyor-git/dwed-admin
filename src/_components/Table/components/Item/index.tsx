@@ -8,14 +8,13 @@ function Item({
   disableLinks,
   id,
   categoryName,
-  subcategory,
   status,
-  whoAdded,
+  subcategory,
 }: any) {
   const [state, setState] = useState(false);
 
   const [data, { error }] = useDeleteRegionMutation();
-  const deleteRegion = (id: string) => {
+  const deleteQuiz = () => {
     data({ id });
     setState(false);
   };
@@ -37,13 +36,10 @@ function Item({
           {status === 1 ? "Active" : "Deactive"}
         </div>
         <div className={styles.tableData}>
-          <Link to={`${id}`}>{whoAdded}</Link>
-        </div>
-        <div className={styles.tableData}>
           <div
             className={`${styles.actions} ${state ? styles.activeActions : ""}`}
           >
-            <button type="button" onClick={() => deleteRegion(id)}>
+            <button type="button" onClick={deleteQuiz}>
               <i className="fa-solid fa-trash" />
             </button>
           </div>

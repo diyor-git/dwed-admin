@@ -12,6 +12,7 @@ const adminCreatedApi = createApi({
     "Regions",
     "RegionsType",
     "Quiz",
+    "QuizType",
     "Products",
     "ProductsMeasure",
     "OrderStatus",

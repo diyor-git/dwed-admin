@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import styles from "../../../index.module.scss";
-import {Modal, Table} from "../../../components";
+import { Modal, TableV3 } from "../../../components";
 import { Filter } from "../../../../../../_components";
 import validationSchema from "../../../validationSchema.ts";
 import { useGetProductsSubQuery } from "../../../../../api/products.ts";
@@ -77,7 +77,7 @@ function UnitOfMeasure() {
           Add category
         </button>
       </div>
-      <Table
+      <TableV3
         formControls={formControls}
         handleSubmit={handleSubmit}
         rows={data}

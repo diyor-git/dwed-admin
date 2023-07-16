@@ -2,10 +2,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
 import styles from "../../index.module.scss";
-import { useGetRegionsTypeQuery } from "../../../../api/regions.ts";
 import validationSchema from "../../validationSchema.ts";
 import { Table } from "../../../../../_components";
 import { ModalV2 } from "../../components";
+import { useGetQuizCategoryQuery } from "../../../../api/quiz.ts";
 
 function QuizType() {
   const [open, setOpen] = useState(false);
@@ -21,10 +21,10 @@ function QuizType() {
   const [page, setPage] = useState(0);
 
   const {
-    data: regions,
+    data: category,
     isLoading,
     refetch,
-  } = useGetRegionsTypeQuery({ offset: page });
+  } = useGetQuizCategoryQuery({ offset: page });
 
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
@@ -59,9 +59,11 @@ function QuizType() {
       </div>
       <div className={styles.table}>
         <Table
+          disableLinks
+          rowsName={["ID", "Category name", "Status", "Actions"]}
           formControls={formControls}
           handleSubmit={handleSubmit}
-          rows={regions}
+          rows={category}
           loading={loading}
           handleChangePage={handleChangePage}
         />

@@ -66,6 +66,11 @@ function Layout({ children }: any) {
                 to: "/admin/products/create/",
                 text: "Create product",
               },
+              {
+                icon: <WidgetsIcon />,
+                to: "/admin/products/manufacture/",
+                text: "Manufacture",
+              },
             ]}
           />
           <Links

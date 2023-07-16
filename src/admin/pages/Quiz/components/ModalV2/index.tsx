@@ -1,14 +1,17 @@
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
+  Tab,
+  Tabs,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { useState } from "react";
 import styles from "./index.module.scss";
-import FormControlValidate from "../../../../../_components/Form/FormControlValidate";
 import validationSchema from "./validationSchema.ts";
+import { ModalFormGroup } from "./components";
 import { useCreateQuizTypeMutation } from "../../../../api/quiz.ts";
 
 const initialValues = {
@@ -18,10 +21,7 @@ const initialValues = {
 function ModalV2({ open, handleClose }: any) {
   const [createQuizType] = useCreateQuizTypeMutation();
   const onSubmit = ({ name }: any) => {
-    createQuizType({
-      name,
-      status: 1,
-    });
+    createQuizType({ name });
     handleClose();
   };
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
@@ -32,6 +32,13 @@ function ModalV2({ open, handleClose }: any) {
     });
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
+  const [value, setValue] = useState(0);
+
+  // @ts-ignore
+  const handleChange = (event: any, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <Dialog
       className={styles.modal}
@@ -40,39 +47,61 @@ function ModalV2({ open, handleClose }: any) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <form onSubmit={handleSubmit}>
-        <DialogTitle>Health & Care</DialogTitle>
-        <DialogContent className={styles.content}>
-          <div className={styles.languages}>
-            <h4>Uzbek</h4>
-            <h4>Russian</h4>
-            <h4>Korean</h4>
-          </div>
-          <div className={styles.form}>
-            <h4>Category Information</h4>
-            <div className={styles.inputs}>
-              <div className={styles.select}>
-                <FormControl fullWidth className={styles.firstSelect}>
-                  <FormControlValidate
-                    label="Name"
-                    fieldName="name"
-                    controls={formControls}
-                  />
-                </FormControl>
-              </div>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }} />
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>Health & Care</DialogTitle>
+          <DialogContent className={styles.content}>
+            <div className={styles.languages}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Uzbek" {...a11yProps(0)} />
+              </Tabs>
             </div>
-          </div>
-        </DialogContent>
-        <DialogActions className={styles.btns}>
-          {/* eslint-disable-next-line react/button-has-type */}
-          <button type="reset" onClick={handleClose}>
-            Cancel
-          </button>
-          <button type="submit">Save</button>
-        </DialogActions>
-      </form>
+            <CustomTabPanel value={value} index={0}>
+              <div className={styles.form}>
+                <h4>Category Information</h4>
+                <ModalFormGroup formControls={formControls} />
+              </div>
+              <DialogActions className={styles.btns}>
+                {/* eslint-disable-next-line react/button-has-type */}
+                <button type="reset" onClick={handleClose}>
+                  Cancel
+                </button>
+                <button type="submit">Save</button>
+              </DialogActions>
+            </CustomTabPanel>
+          </DialogContent>
+        </form>
+      </Box>
     </Dialog>
   );
+}
+
+function CustomTabPanel(props: any) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }
 
 export default ModalV2;

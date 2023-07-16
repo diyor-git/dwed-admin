@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { Modal } from "../../components";
-import { Table } from "../../../../../_components";
 import validationSchema from "../../validationSchema.ts";
 import styles from "../../index.module.scss";
 import { useGetRegionsFinalQuery } from "../../../../api/regions.ts";
+import Table from "../../components/Table";
 
 function FinalCategory() {
   const { id } = useParams();

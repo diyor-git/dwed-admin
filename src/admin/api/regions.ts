@@ -4,19 +4,22 @@ export const regionsApi = regionsCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     getRegions: build.query({
       query: ({ offset, search }: any) => ({
-        url: `/GMS/api/v1.0/admin/region/?parent=0&limit=10&offset=${offset}&search=${search}`,
+        url: `/GMS/api/v1.0/admin/region/`,
+        params: { parent: 0, limit: 10, offset, search },
       }),
       providesTags: ["Regions"],
     }),
     getRegionsSub: build.query({
       query: ({ offset, id, search }: any) => ({
-        url: `/GMS/api/v1.0/admin/region/?parent=${id}&limit=10&offset=${offset}&search=${search}`,
+        url: `/GMS/api/v1.0/admin/region/`,
+        params: { parent: id, limit: 10, offset, search },
       }),
       providesTags: ["Regions"],
     }),
     getRegionsFinal: build.query({
       query: ({ offset, id, search }: any) => ({
-        url: `/GMS/api/v1.0/admin/region/?parent=${id}&limit=10&offset=${offset}&search=${search}`,
+        url: `/GMS/api/v1.0/admin/region/`,
+        params: { parent: id, limit: 10, offset, search },
       }),
       providesTags: ["Regions"],
     }),
@@ -60,7 +63,8 @@ export const regionsApi = regionsCreatedApi.injectEndpoints({
     }),
     getRegionsType: build.query({
       query: ({ offset, search }: any) => ({
-        url: `/GMS/api/v1.0/admin/region_type/?limit=10&offset=${offset}&search=${search}`,
+        url: `/GMS/api/v1.0/admin/region_type/`,
+        params: { limit: 10, offset, search },
       }),
       providesTags: ["RegionsType"],
     }),

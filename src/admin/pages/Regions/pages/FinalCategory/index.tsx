@@ -78,7 +78,6 @@ function FinalCategory() {
           "Category name",
           "Subcategory",
           "Status",
-          "Who added",
           "Actions",
         ]}
         formControls={formControls}

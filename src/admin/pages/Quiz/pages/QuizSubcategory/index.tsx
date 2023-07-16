@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { Modal } from "../../components";
-import { Table } from "../../../../../_components";
 import { useGetRegionsSubQuery } from "../../../../api/regions";
 import validationSchema from "../../validationSchema";
 import styles from "../../index.module.scss";
+import Table from "../../components/Table";
 
 function QuizSubcategory() {
   const { id } = useParams();

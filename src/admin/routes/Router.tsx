@@ -14,6 +14,8 @@ import OrdersStatus from "../pages/OrdersStatus";
 import ProductType from "../pages/Product/pages/ProductType";
 import ProductMeasure from "../pages/Product/pages/Measure";
 import CreateProduct from "../pages/Product/pages/CreateProduct";
+import UnitOfMeasure from "../pages/Product/pages/ProductList/UnitOfMeasure";
+import ProductManufacture from "../pages/Product/pages/Manufacture";
 
 function Router() {
   return (
@@ -30,23 +32,23 @@ function Router() {
       <Route path="quiz" element={<Outlet />}>
         <Route index element={<Quiz />} />
         <Route path="type" element={<QuizType />} />
-        <Route path=":id" element={<Outlet />}>
+        <Route path=":id/:name" element={<Outlet />}>
           <Route index element={<QuizSubcategory />} />
-          <Route index path=":subid" element={<QuizFinalCategory />} />
+          <Route index path=":subid/:title" element={<QuizFinalCategory />} />
         </Route>
       </Route>
       <Route path="products" element={<Outlet />}>
         <Route index element={<Product />} />
         <Route path="measure" element={<ProductMeasure />} />
+        <Route path="manufacture" element={<ProductManufacture />} />
         <Route path="type" element={<ProductType />} />
         <Route path="create" element={<CreateProduct />} />
         <Route path=":id/:name" element={<Outlet />}>
           <Route index element={<ProductsSubCategory />} />
-          <Route
-            index
-            path=":subid/:title"
-            element={<ProductFinalCategory />}
-          />
+          <Route path=":subid/:title" element={<Outlet />}>
+            <Route index element={<ProductFinalCategory />} />
+            <Route path="measure" element={<UnitOfMeasure />} />
+          </Route>
         </Route>
       </Route>
       <Route path="orders-status" element={<OrdersStatus />} />

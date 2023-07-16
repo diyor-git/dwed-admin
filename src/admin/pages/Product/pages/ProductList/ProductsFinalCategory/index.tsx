@@ -10,7 +10,7 @@ import { Table } from "./components";
 import styles from "../../../index.module.scss";
 
 function ProductFinalCategory() {
-  const { id } = useParams();
+  const { subid } = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
@@ -26,7 +26,7 @@ function ProductFinalCategory() {
   };
   const { data, isLoading, refetch } = useGetProductsFinalQuery({
     offset: page,
-    id,
+    id: subid,
     search: searchItem,
   });
 
@@ -77,7 +77,7 @@ function ProductFinalCategory() {
         formControls={formControls}
         handleSubmit={handleSubmit}
         rows={data}
-        disableLinks
+        disableLinks={false}
         loading={loading}
         handleChangePage={handleChangePage}
         handleOpenFilter={handleOpenFilter}

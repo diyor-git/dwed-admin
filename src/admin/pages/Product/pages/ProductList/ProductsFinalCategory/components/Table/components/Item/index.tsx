@@ -29,7 +29,7 @@ function Item({
           {disableLinks ? (
             categoryName
           ) : (
-            <Link to={`${id}/${categoryName}`}>{categoryName}</Link>
+            <Link to={`measure`}>{categoryName}</Link>
           )}
         </div>
         <div className={styles.tableData}>{subcategory || 0}</div>

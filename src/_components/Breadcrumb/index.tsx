@@ -2,15 +2,7 @@ import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { NavLink } from "react-router-dom";
 import styles from "./index.module.scss";
 
-function Regions({ match }: any) {
-  return (
-    <span className={styles.span}>
-      {match.params.subname || match.params.title} /{" "}
-    </span>
-  );
-}
-
-function Products({ match }: any) {
+function DinamicRoute({ match }: any) {
   return (
     <span className={styles.span}>
       {match.params.subname || match.params.title} /{" "}
@@ -40,16 +32,21 @@ const routes = [
   },
   {
     path: "/admin/regions/:id/:title",
-    breadcrumb: Regions,
+    breadcrumb: DinamicRoute,
+  },
+  {
+    path: "/admin/regions/:id",
+    breadcrumb: None,
   },
   {
     path: "/admin/regions/:id/:title/:subid/:subname",
-    breadcrumb: Regions,
+    breadcrumb: DinamicRoute,
   },
   {
     path: "/admin/regions/:id/:title/:subid",
     breadcrumb: None,
   },
+
   {
     path: "/admin/regions/type",
     breadcrumb: CustomPropsBreadcrumb,
@@ -66,6 +63,23 @@ const routes = [
     props: { text: "Types" },
   },
   {
+    breadcrumb: DinamicRoute,
+    path: "/admin/quiz/:id/:title",
+  },
+  {
+    path: "/admin/quiz/:id",
+    breadcrumb: None,
+  },
+  {
+    path: "/admin/quiz/:id/:title/:subid/:subname",
+    breadcrumb: DinamicRoute,
+  },
+  {
+    path: "/admin/quiz/:id/:title/:subid",
+    breadcrumb: None,
+  },
+
+  {
     path: "/admin/orders-status",
     breadcrumb: CustomPropsBreadcrumb,
     props: { text: "Orders status" },
@@ -77,7 +91,7 @@ const routes = [
   },
   {
     path: "/admin/products/:id/:title",
-    breadcrumb: Products,
+    breadcrumb: DinamicRoute,
   },
   {
     path: "/admin/products/:id",
@@ -85,10 +99,14 @@ const routes = [
   },
   {
     path: "/admin/products/:id/:title/:subid/:subname",
-    breadcrumb: Products,
+    breadcrumb: DinamicRoute,
   },
   {
     path: "/admin/products/:id/:title/:subid",
+    breadcrumb: None,
+  },
+  {
+    path: "/admin/products/:id/:title/:subid/:subname/measure",
     breadcrumb: None,
   },
   {

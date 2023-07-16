@@ -43,6 +43,13 @@ function QuickAction({ handleChange, expanded }: any) {
         >
           <ListItemText primary="Offer Character" />
         </ListItem>
+        <ListItem
+          className={expanded === "panel6" ? styles.active : ""}
+          button
+          onClick={handleChange("panel6")}
+        >
+          <ListItemText primary="Offer Media" />
+        </ListItem>
       </List>
     </div>
   );

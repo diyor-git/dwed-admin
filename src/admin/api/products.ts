@@ -4,25 +4,29 @@ export const productsApi = regionsCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     getProducts: build.query({
       query: ({ offset, search, limit = 10 }: any) => ({
-        url: `/PMS/api/v1.0/admin/product_category/?limit=${limit}&offset=${offset}&search=${search}`,
+        url: `/PMS/api/v1.0/admin/product_category/`,
+        params: { limit, offset, search },
       }),
       providesTags: ["Products"],
     }),
     getProductsSub: build.query({
       query: ({ offset, search, limit = 10, id }: any) => ({
-        url: `/PMS/api/v1.0/admin/product_category/?parent=${id}&limit=${limit}&offset=${offset}&search=${search}`,
+        url: `/PMS/api/v1.0/admin/product_category/`,
+        params: { parent: id, limit, offset, search },
       }),
       providesTags: ["Products"],
     }),
     getProductsFinal: build.query({
       query: ({ offset, search, limit = 10, id }: any) => ({
-        url: `/PMS/api/v1.0/admin/product_category/?parent=${id}&limit=${limit}&offset=${offset}&search=${search}`,
+        url: `/PMS/api/v1.0/admin/product_category/`,
+        params: { parent: id, limit, offset, search },
       }),
       providesTags: ["Products"],
     }),
     getProductsType: build.query({
-      query: ({ offset, limit = 10 }: any) => ({
-        url: `/PMS/api/v1.0/admin/product_type/?limit=${limit}&offset=${offset}&search=`,
+      query: ({ offset, limit = 10, search }: any) => ({
+        url: `/PMS/api/v1.0/admin/product_type/`,
+        params: { limit, offset, search },
       }),
       providesTags: ["Products"],
     }),
@@ -73,7 +77,8 @@ export const productsApi = regionsCreatedApi.injectEndpoints({
     }),
     getProductsMeasure: build.query({
       query: ({ search = "", offset = "", limit = 10 }) => ({
-        url: `/PMS/api/v1.0/admin/product_unit/?limit=${limit}&offset=${offset}&search=${search}`,
+        url: `/PMS/api/v1.0/admin/product_unit/`,
+        params: { limit, offset, search },
       }),
       providesTags: ["ProductsMeasure"],
     }),
@@ -86,8 +91,9 @@ export const productsApi = regionsCreatedApi.injectEndpoints({
       invalidatesTags: ["ProductsMeasure"],
     }),
     getProductsManufacture: build.query({
-      query: ({ limit = 10 }) => ({
-        url: `/PMS/api/v1.0/admin/manufacturer/?limit=${limit}`,
+      query: ({ limit = 10, offset, search }) => ({
+        url: `/PMS/api/v1.0/admin/manufacturer/`,
+        params: { offset, limit, search },
       }),
       providesTags: ["Products"],
     }),

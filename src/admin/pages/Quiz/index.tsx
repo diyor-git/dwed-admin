@@ -1,11 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
-import Table from "../../../_components/Table";
 import { Modal } from "./components";
 import validationSchema from "./validationSchema";
 import { useGetQuizQuery } from "../../api/quiz.ts";
 import styles from "./index.module.scss";
+import Table from "./components/Table";
 
 function Quiz() {
   const [open, setOpen] = useState(false);

@@ -77,14 +77,7 @@ function Regions() {
       </div>
       <div className={styles.table}>
         <Table
-          rowsName={[
-            "ID",
-            "Category name",
-            "Subcategory",
-            "Status",
-            "Who added",
-            "Actions",
-          ]}
+          rowsName={["ID", "Category name", "Subcategory", "Status", "Actions"]}
           formControls={formControls}
           handleSubmit={handleSubmit}
           rows={regions}
