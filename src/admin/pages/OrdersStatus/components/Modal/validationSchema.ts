@@ -6,6 +6,7 @@ function validationSchema() {
     description: Yup.string().required(),
     creator: Yup.string().required(),
     org: Yup.string().required(),
+    img: Yup.string(),
   });
 }
 

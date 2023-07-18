@@ -6,11 +6,20 @@ import validationSchema from "./validationSchema";
 import { useGetQuizQuery } from "../../api/quiz.ts";
 import styles from "./index.module.scss";
 import Table from "./components/Table";
+import { Filter } from "../../../_components";
 
 function Quiz() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [, setFilterValue] = useState("");
+  const [openFilter, setOpenFilter] = useState(false);
 
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,6 +56,11 @@ function Quiz() {
   return (
     <div className={styles.quiz}>
       <Modal open={open} handleClose={handleClose} />
+      <Filter
+        open={openFilter}
+        selectedValue={setFilterValue}
+        onClose={handleCloseFilter}
+      />
       <div className={styles.header}>
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
@@ -65,6 +79,7 @@ function Quiz() {
           ]}
           formControls={formControls}
           handleSubmit={handleSubmit}
+          handleOpenFilter={handleOpenFilter}
           rows={quiz}
           loading={loading}
           handleChangePage={handleChangePage}

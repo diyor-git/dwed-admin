@@ -16,12 +16,22 @@ import { useCreateOrderStatusMutation } from "../../../../api/orderstatus.ts";
 
 const initialValues = {
   name: "",
+  description: "",
+  creator: "",
+  org: "",
+  img: "",
 };
 
 function Modal({ open, handleClose }: any) {
   const [createOrderStatus] = useCreateOrderStatusMutation();
-  const onSubmit = ({ name, description, creator, org }: any) => {
-    createOrderStatus({ name, description, creator, org });
+  const onSubmit = ({ name, description, creator, org, img }: any) => {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("creator", creator);
+    formData.append("org", org);
+    formData.append("img", img);
+    createOrderStatus(formData);
     handleClose();
   };
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =

@@ -3,13 +3,17 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import styles from "../../index.module.scss";
 import validationSchema from "../../validationSchema.ts";
-import { Table } from "../../../../../_components";
+import { Filter } from "../../../../../_components";
 import { ModalV2 } from "../../components";
 import { useGetQuizCategoryQuery } from "../../../../api/quiz.ts";
+import Table from "../../components/Table";
 
 function QuizType() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [, setFilterValue] = useState("");
+  const [openFilter, setOpenFilter] = useState(false);
+    const [searchItem, setSearchItem] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,13 +22,20 @@ function QuizType() {
     setOpen(false);
   };
 
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+
   const [page, setPage] = useState(0);
 
   const {
     data: category,
     isLoading,
     refetch,
-  } = useGetQuizCategoryQuery({ offset: page });
+  } = useGetQuizCategoryQuery({ offset: page, search: searchItem });
 
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
@@ -35,7 +46,7 @@ function QuizType() {
   };
 
   const onSubmit = ({ search }: any) => {
-    console.log(search);
+    setSearchItem(search);
   };
 
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
@@ -51,6 +62,11 @@ function QuizType() {
   return (
     <div className={styles.quiz}>
       <ModalV2 open={open} handleClose={handleClose} />
+      <Filter
+        open={openFilter}
+        selectedValue={setFilterValue}
+        onClose={handleCloseFilter}
+      />
       <div className={styles.header}>
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
@@ -60,12 +76,20 @@ function QuizType() {
       <div className={styles.table}>
         <Table
           disableLinks
-          rowsName={["ID", "Category name", "Status", "Actions"]}
+          rowsName={[
+            "ID",
+            "Category name",
+            "Subcateogry",
+            "Status",
+            "Who added",
+            "Actions",
+          ]}
           formControls={formControls}
           handleSubmit={handleSubmit}
           rows={category}
           loading={loading}
           handleChangePage={handleChangePage}
+          handleOpenFilter={handleOpenFilter}
         />
       </div>
     </div>

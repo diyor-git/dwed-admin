@@ -31,6 +31,13 @@ export const quizApi = regionsCreatedApi.injectEndpoints({
       }),
       invalidatesTags: ["QuizType"],
     }),
+    deleteQuizType: build.mutation({
+      query: ({ id }: any) => ({
+        url: `/QMS/api/v1.0/public/quiz/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["QuizType"],
+    }),
     createQuiz: build.mutation({
       query: (formData: any) => ({
         url: `/QMS/api/v1.0/public/quiz/`,
@@ -49,6 +56,7 @@ export const {
   useGetQuizQuery,
   useCreateQuizTypeMutation,
   useDeleteQuizMutation,
+  useDeleteQuizTypeMutation,
   useGetQuizCategoryQuery,
   useCreateQuizMutation,
 } = quizApi;

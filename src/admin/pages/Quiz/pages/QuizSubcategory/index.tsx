@@ -12,6 +12,7 @@ function QuizSubcategory() {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,7 +21,6 @@ function QuizSubcategory() {
     setOpen(false);
   };
 
-  const [page, setPage] = useState(0);
 
   const { data, isLoading, refetch } = useGetRegionsSubQuery({
     offset: page,
@@ -54,7 +54,7 @@ function QuizSubcategory() {
   if (isLoading) return <div />;
 
   return (
-    <div className={styles.regions}>
+    <div className={styles.quiz}>
       <Modal open={open} handleClose={handleClose} />
       <div className={styles.header}>
         <button type="button" onClick={handleClickOpen}>

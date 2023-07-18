@@ -10,10 +10,13 @@ export const orderstatusApi = regionsCreatedApi.injectEndpoints({
       providesTags: ["OrderStatus"],
     }),
     createOrderStatus: build.mutation({
-      query: ({ name, description, creator, org }: any) => ({
+      query: (formData: any) => ({
         url: `/OMS/api/v1.0/admin/flow/`,
         method: "POST",
-        data: { name, description, creator, org },
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }),
       invalidatesTags: ["OrderStatus"],
     }),

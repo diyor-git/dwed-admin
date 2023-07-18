@@ -1,7 +1,10 @@
 import { FormControl } from "@mui/material";
 import styles from "../../index.module.scss";
 import FormControlValidate from "../../../../../../../_components/Form/FormControlValidate";
-import { TextareaControlValidate } from "../../../../../../../_components/Form";
+import {
+  DragDropFiles,
+  TextareaControlValidate,
+} from "../../../../../../../_components/Form";
 
 function FormGroup({ formControls }: any) {
   return (
@@ -42,6 +45,7 @@ function FormGroup({ formControls }: any) {
         placeholder="Description"
         fieldName="description"
       />
+      <DragDropFiles controls={formControls} fieldName="img" />
     </div>
   );
 }

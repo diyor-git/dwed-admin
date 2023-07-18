@@ -5,7 +5,7 @@ export const regionsApi = regionsCreatedApi.injectEndpoints({
     getRegions: build.query({
       query: ({ offset, search }: any) => ({
         url: `/GMS/api/v1.0/admin/region/`,
-        params: { parent: 0, limit: 10, offset, search },
+        params: { parent: 0, limit: 10, offset, search, name },
       }),
       providesTags: ["Regions"],
     }),

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import styles from "../../index.module.scss";
 import { ErrorAlert } from "../../../../../../../_components";
-import { useDeleteQuizMutation } from "../../../../../../api/quiz.ts";
+import { useDeleteQuizTypeMutation } from "../../../../../../api/quiz.ts";
 
 function Item({
   disableLinks,
@@ -14,8 +14,8 @@ function Item({
 }: any) {
   const [state, setState] = useState(false);
 
-  const [data, { error }] = useDeleteQuizMutation();
-  const deleteQuiz = () => {
+  const [data, { error }] = useDeleteQuizTypeMutation();
+  const deleteQuizType = () => {
     data({ id });
     setState(false);
   };
@@ -37,13 +37,13 @@ function Item({
           {status === 1 ? "Active" : "Deactive"}
         </div>
         <div className={styles.tableData}>
-          <Link to={`${id}`}>{whoAdded || "None"}</Link>
+          <Link to={`${id}`}>{whoAdded}</Link>
         </div>
         <div className={styles.tableData}>
           <div
             className={`${styles.actions} ${state ? styles.activeActions : ""}`}
           >
-            <button type="button" onClick={deleteQuiz}>
+            <button type="button" onClick={deleteQuizType}>
               <i className="fa-solid fa-trash" />
             </button>
           </div>
