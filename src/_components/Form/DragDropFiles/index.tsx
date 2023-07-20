@@ -18,8 +18,8 @@ const DragDropFile = forwardRef(
     const { setFieldValue, setFieldTouched } = controls;
 
     const handleChangeTouched = async (fileitems: any) => {
-      await setFieldValue("img", fileitems[0].file);
-      setFieldTouched("img");
+      await setFieldValue(fieldName, fileitems[0].file);
+      setFieldTouched(fieldName);
     };
     return (
       <div className={styles.input}>

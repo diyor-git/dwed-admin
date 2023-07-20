@@ -24,7 +24,7 @@ const initialValues = {
   regionType: "",
 };
 
-function Modal({ open, handleClose }: any) {
+function Modal({ open, handleClose, parentParam, offset }: any) {
   const [createRegion] = useCreateRegionMutation();
   const onSubmit = ({ categoryName, categoryOfCategory, regionType }: any) => {
     createRegion({
@@ -48,8 +48,9 @@ function Modal({ open, handleClose }: any) {
     search: "",
   });
   const { data: regions, isLoading: loading } = useGetRegionsQuery({
-    offset: 0,
+    offset,
     search: "",
+    parent: parentParam,
   });
 
   const [value, setValue] = useState(0);

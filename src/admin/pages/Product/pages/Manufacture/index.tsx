@@ -1,27 +1,17 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import validationSchema from "../../validationSchema.ts";
-import { Filter } from "../../../../../_components";
-import { TableV2 } from "../../components";
-import styles from "../../index.module.scss";
 import { useGetProductsManufactureQuery } from "../../../../api/products.ts";
+import validationSchema from "../../../../components/SearchValidation";
+import { Table } from "../../../../../_components";
+import styles from "./index.module.scss";
 
 function ProductManufacture() {
   const [loading, setLoading] = useState(false);
   const [searchItem, setSearchItem] = useState("");
-  const [, setFilterValue] = useState("");
-  const [openFilter, setOpenFilter] = useState(false);
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
   const [page, setPage] = useState(0);
 
   const {
-    data: regions,
+    data: manufacture,
     isLoading,
     refetch,
   } = useGetProductsManufactureQuery({ offset: page, search: searchItem });
@@ -41,29 +31,26 @@ function ProductManufacture() {
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
     useFormik({
       initialValues: { search: "" },
-      onSubmit,
       validationSchema: validationSchema(),
+      onSubmit,
     });
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
   if (isLoading) return <div />;
   return (
-    <div className={styles.regions}>
-      <Filter
-        open={openFilter}
-        selectedValue={setFilterValue}
-        onClose={handleCloseFilter}
-      />
+    <div className={styles.manufacture}>
       <div className={styles.table}>
-        <TableV2
+        <Table
           formControls={formControls}
           disableLinks
+          actions={false}
+          rowsName={["ID", "Category name"]}
           handleSubmit={handleSubmit}
-          rows={regions}
+          rows={manufacture}
           loading={loading}
           handleChangePage={handleChangePage}
-          handleOpenFilter={handleOpenFilter}
+          handleOpenFilter={null}
         />
       </div>
     </div>

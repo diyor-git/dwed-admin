@@ -29,7 +29,7 @@ function OfferCode({ formControls, handleChange, expanded }: any) {
         <div className={styles.form}>
           {data &&
             data.results.map((region: any) => (
-              <FormGroup>
+              <FormGroup key={region.id}>
                 <h4>{region.name}</h4>
                 <FormControlValidate
                   fieldName="bar_code"

@@ -1,23 +1,16 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import validationSchema from "../../validationSchema.ts";
-import { TableV2 } from "../../components";
-import styles from "../../index.module.scss";
 import { useGetProductsTypeQuery } from "../../../../api/products.ts";
+import validationSchema from "../../../../components/SearchValidation";
+import {Table} from "../../../../../_components";
 
 function ProductType() {
   const [loading, setLoading] = useState(false);
   const [searchItem, setSearchItem] = useState("");
-  const [, setOpenFilter] = useState(false);
-
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
-
   const [page, setPage] = useState(0);
 
   const {
-    data: regions,
+    data: productsType,
     isLoading,
     refetch,
   } = useGetProductsTypeQuery({ offset: page, search: searchItem });
@@ -45,16 +38,18 @@ function ProductType() {
 
   if (isLoading) return <div />;
   return (
-    <div className={styles.regions}>
-      <div className={styles.table}>
-        <TableV2
+    <div>
+      <div>
+        <Table
           formControls={formControls}
           disableLinks
+          actions={false}
+          rowsName={["ID", "Category name"]}
           handleSubmit={handleSubmit}
-          rows={regions}
+          rows={productsType}
           loading={loading}
           handleChangePage={handleChangePage}
-          handleOpenFilter={handleOpenFilter}
+          handleOpenFilter={null}
         />
       </div>
     </div>

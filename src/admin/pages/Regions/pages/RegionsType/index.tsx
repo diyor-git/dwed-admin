@@ -1,11 +1,14 @@
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
-import { useGetRegionsTypeQuery } from "../../../../api/regions.ts";
-import validationSchema from "../../validationSchema.ts";
-import { Filter } from "../../../../../_components";
-import { ModalV2, TableV2 } from "../../components";
-import styles from "../../index.module.scss";
+import {
+  useDeleteRegionsTypeMutation,
+  useGetRegionsTypeQuery,
+} from "../../../../api/regions.ts";
+import { Filter, Table } from "../../../../../_components";
+import { TypeModal } from "../../components";
+import styles from "../Categories/index.module.scss";
+import validationSchema from "../../../../components/SearchValidation";
 
 function RegionsType() {
   const [open, setOpen] = useState(false);
@@ -53,13 +56,14 @@ function RegionsType() {
       onSubmit,
       validationSchema: validationSchema(),
     });
+  const [deleteRegionType, { error }] = useDeleteRegionsTypeMutation();
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
   if (isLoading) return <div />;
   return (
     <div className={styles.regions}>
-      <ModalV2 open={open} handleClose={handleClose} />
+      <TypeModal open={open} handleClose={handleClose} />
       <Filter
         open={openFilter}
         selectedValue={setFilterValue}
@@ -72,8 +76,8 @@ function RegionsType() {
         </button>
       </div>
       <div className={styles.table}>
-        <TableV2
-          rowsName={["ID", "Category name", "Actions"]}
+        <Table
+          rowsName={["ID", "Category name"]}
           formControls={formControls}
           disableLinks
           handleSubmit={handleSubmit}
@@ -81,6 +85,8 @@ function RegionsType() {
           loading={loading}
           handleChangePage={handleChangePage}
           handleOpenFilter={handleOpenFilter}
+          deleteMutation={deleteRegionType}
+          error={error}
         />
       </div>
     </div>

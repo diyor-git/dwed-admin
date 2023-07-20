@@ -1,18 +1,16 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../../auth/api/auth.ts";
 
 function useAuth() {
-  const navigate = useNavigate();
   const [signInData, { data, error, isSuccess, isLoading }] =
     useSignInMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      localStorage.setItem("accessToken", data.access);
       localStorage.setItem("refreshToken", data.refresh);
+      localStorage.setItem("accessToken", data.access);
       setTimeout(() => {
-        navigate("/admin/regions");
+        window.location.reload();
       }, 300);
     }
   }, [isSuccess]);

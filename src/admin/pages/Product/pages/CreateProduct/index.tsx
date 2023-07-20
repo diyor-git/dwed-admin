@@ -10,10 +10,9 @@ import {
   OfferManufactured,
   QuickAction,
 } from "./components";
-import styles from "./index.module.scss";
-import { DragDropFiles } from "../../../../../_components/Form";
 import validationSchema from "./validationSchema.ts";
 import { useCreateProductMutation } from "../../../../api/products.ts";
+import styles from "./index.module.scss";
 
 const initialValuesLogin = {
   name: "",

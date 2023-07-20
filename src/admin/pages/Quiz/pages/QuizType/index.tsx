@@ -1,20 +1,28 @@
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
-import styles from "../../index.module.scss";
-import validationSchema from "../../validationSchema.ts";
-import { Filter } from "../../../../../_components";
-import { ModalV2 } from "../../components";
-import { useGetQuizCategoryQuery } from "../../../../api/quiz.ts";
-import Table from "../../components/Table";
+import { Filter, Table } from "../../../../../_components";
+import { TypeModal } from "../../components";
+import {
+  useDeleteQuizTypeMutation,
+  useGetQuizTypeQuery,
+} from "../../../../api/quiz.ts";
+import styles from "../Quizes/index.module.scss";
+import validationSchema from "../../../../components/SearchValidation";
 
 function QuizType() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
   const [, setFilterValue] = useState("");
   const [openFilter, setOpenFilter] = useState(false);
-    const [searchItem, setSearchItem] = useState("");
 
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -22,20 +30,13 @@ function QuizType() {
     setOpen(false);
   };
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-
   const [page, setPage] = useState(0);
 
   const {
-    data: category,
+    data: regions,
     isLoading,
     refetch,
-  } = useGetQuizCategoryQuery({ offset: page, search: searchItem });
+  } = useGetQuizTypeQuery({ offset: page, search: searchItem });
 
   // @ts-ignore
   const handleChangePage = async (event: any, newPage: any) => {
@@ -55,13 +56,14 @@ function QuizType() {
       onSubmit,
       validationSchema: validationSchema(),
     });
+  const [deleteQuizType, { error }] = useDeleteQuizTypeMutation();
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
   if (isLoading) return <div />;
   return (
-    <div className={styles.quiz}>
-      <ModalV2 open={open} handleClose={handleClose} />
+    <div className={styles.regions}>
+      <TypeModal open={open} handleClose={handleClose} />
       <Filter
         open={openFilter}
         selectedValue={setFilterValue}
@@ -75,21 +77,16 @@ function QuizType() {
       </div>
       <div className={styles.table}>
         <Table
-          disableLinks
-          rowsName={[
-            "ID",
-            "Category name",
-            "Subcateogry",
-            "Status",
-            "Who added",
-            "Actions",
-          ]}
+          rowsName={["ID", "Category name", "Used", "Status", ""]}
           formControls={formControls}
+          disableLinks
           handleSubmit={handleSubmit}
-          rows={category}
+          rows={regions}
           loading={loading}
           handleChangePage={handleChangePage}
           handleOpenFilter={handleOpenFilter}
+          deleteMutation={deleteQuizType}
+          error={error}
         />
       </div>
     </div>

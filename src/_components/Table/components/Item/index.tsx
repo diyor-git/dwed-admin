@@ -1,45 +1,45 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import styles from "../../index.module.scss";
-import { ErrorAlert } from "../../../index.ts";
-import { useDeleteRegionMutation } from "../../../../admin/api/regions.ts";
 
 function Item({
-  disableLinks,
   id,
   categoryName,
   status,
   subcategory,
+  deleteMutation,
+  creator,
+  actions,
 }: any) {
   const [state, setState] = useState(false);
 
-  const [data, { error }] = useDeleteRegionMutation();
-  const deleteQuiz = () => {
-    data({ id });
+  const deleteItem = () => {
+    deleteMutation({ id });
     setState(false);
   };
   return (
-    <>
-      {/* @ts-ignore */}
-      <ErrorAlert error={error} />
-      <div className={styles.tableRow}>
-        <div className={styles.tableData}>{id}</div>
-        <div className={styles.tableData}>
-          {disableLinks ? (
-            categoryName
-          ) : (
-            <Link to={`${id}/${categoryName}`}>{categoryName}</Link>
-          )}
-        </div>
-        <div className={styles.tableData}>{subcategory || 0}</div>
-        <div className={styles.tableData}>
-          {status === 1 ? "Active" : "Deactive"}
-        </div>
+    <div className={styles.tableRow}>
+      <div className={styles.tableData}>{id}</div>
+      <div className={styles.tableData}>
+        {subcategory ? (
+          <Link to={`?parent=${id}`}>{categoryName}</Link>
+        ) : (
+          categoryName
+        )}
+      </div>
+      <div className={styles.tableData}>
+        {subcategory !== undefined ? subcategory || 0 : ""}
+      </div>
+      <div className={styles.tableData}>
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {status === undefined ? creator : status === 1 ? "Active" : "Deactive"}
+      </div>
+      {actions && (
         <div className={styles.tableData}>
           <div
             className={`${styles.actions} ${state ? styles.activeActions : ""}`}
           >
-            <button type="button" onClick={deleteQuiz}>
+            <button type="button" onClick={deleteItem}>
               <i className="fa-solid fa-trash" />
             </button>
           </div>
@@ -48,8 +48,8 @@ function Item({
             onClick={() => setState(!state)}
           />
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
 

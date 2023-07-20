@@ -24,6 +24,7 @@ function FormGroup({ formControls, regionsType, regions }: any) {
               label="Category of category"
               fieldName="categoryOfCategory"
             >
+              <MenuItem value={undefined}>None</MenuItem>
               {regions &&
                 regions.results.map((el: any) => (
                   <MenuItem key={el.id} value={el.id}>

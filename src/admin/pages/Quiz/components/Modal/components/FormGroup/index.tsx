@@ -2,8 +2,9 @@ import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import styles from "../../index.module.scss";
 import FormControlValidate from "../../../../../../../_components/Form/FormControlValidate";
 import SelectControlValidate from "../../../../../../../_components/Form/SelectControlValidate";
+import {DragDropFiles} from "../../../../../../../_components/Form";
 
-function FormGroup({ formControls, quizCategory }: any) {
+function FormGroup({ formControls, quizType }: any) {
   return (
     <div className={styles.inputs}>
       <div className={styles.select}>
@@ -24,8 +25,8 @@ function FormGroup({ formControls, quizCategory }: any) {
               controls={formControls}
               fieldName="category"
             >
-              {quizCategory &&
-                quizCategory.results.map((el: any) => (
+              {quizType &&
+                quizType.results.map((el: any) => (
                   <MenuItem key={el.id} value={el.id}>
                     {el.name}
                   </MenuItem>
@@ -47,6 +48,7 @@ function FormGroup({ formControls, quizCategory }: any) {
           </FormControl>
         </div>
       </div>
+      <DragDropFiles controls={formControls} />
     </div>
   );
 }

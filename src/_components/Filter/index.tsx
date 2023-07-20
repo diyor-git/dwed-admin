@@ -23,7 +23,7 @@ function Filter({ onClose, selectedValue, open }: any) {
         <Item color="var(--red)" label="Who added" />
       </List>
       <div className={styles.btn}>
-        <button type="button">Select</button>
+        <button type="button" onClick={handleClose}>Select</button>
       </div>
     </Dialog>
   );

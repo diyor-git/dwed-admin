@@ -14,9 +14,8 @@ import validationSchema from "./validationSchema.ts";
 import { ModalFormGroup } from "./components";
 import {
   useCreateQuizMutation,
-  useGetQuizCategoryQuery,
+  useGetQuizTypeQuery,
 } from "../../../../api/quiz.ts";
-import DragDropFiles from "../../../../../_components/Form/DragDropFiles";
 
 const initialValues = {
   name: "",
@@ -24,6 +23,29 @@ const initialValues = {
   category: "",
   img: "",
 };
+
+function CustomTabPanel(props: any) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 function Modal({ open, handleClose }: any) {
   const [createQuiz] = useCreateQuizMutation();
@@ -36,6 +58,7 @@ function Modal({ open, handleClose }: any) {
     createQuiz(formData);
     handleClose();
   };
+
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
     useFormik({
       initialValues,
@@ -44,10 +67,10 @@ function Modal({ open, handleClose }: any) {
     });
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
-  const { data: quizCategory, isLoading } = useGetQuizCategoryQuery({
+  const { data: quizType, isLoading } = useGetQuizTypeQuery({
     offset: 0,
-    search: "",
   });
+
   const [value, setValue] = useState(0);
 
   // @ts-ignore
@@ -83,9 +106,8 @@ function Modal({ open, handleClose }: any) {
                 <h4>Category Information</h4>
                 <ModalFormGroup
                   formControls={formControls}
-                  quizCategory={quizCategory}
+                  quizType={quizType}
                 />
-                <DragDropFiles controls={formControls} />
               </div>
               <DialogActions className={styles.btns}>
                 {/* eslint-disable-next-line react/button-has-type */}
@@ -100,29 +122,6 @@ function Modal({ open, handleClose }: any) {
       </Box>
     </Dialog>
   );
-}
-
-function CustomTabPanel(props: any) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
 }
 
 export default Modal;

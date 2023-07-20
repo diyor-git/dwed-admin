@@ -2,8 +2,10 @@ import * as Yup from "yup";
 
 function validationSchema() {
   return Yup.object().shape({
-    categoryName: Yup.string().required(),
-    categoryOfCategory: Yup.string().required(),
+    name: Yup.string().required(),
+    image: Yup.string(),
+    status: Yup.string(),
+    parent: Yup.string(),
   });
 }
 

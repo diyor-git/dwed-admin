@@ -1,28 +1,60 @@
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
+  Tab,
+  Tabs,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { useState } from "react";
 import styles from "./index.module.scss";
-import FormControlValidate from "../../../../../_components/Form/FormControlValidate";
-import { useGetRegionsTypeQuery } from "../../../../api/regions.ts";
-import SelectControlValidate from "../../../../../_components/Form/SelectControlValidate";
 import validationSchema from "./validationSchema.ts";
+import { ModalFormGroup } from "./components";
+import { useCreateProductsCategoryMutation } from "../../../../api/products.ts";
 
 const initialValues = {
-  categoryName: "",
-  categoryOfCategory: "",
-  regionType: "",
+  name: "",
+  image: "",
+  status: "",
+  parent: "",
 };
 
-function Modal({ open, handleClose }: any) {
-  const onSubmit = ({ categoryName, categoryOfCategory, regionType }: any) => {
-    console.log(categoryName, categoryOfCategory, regionType);
+function CustomTabPanel(props: any) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+function Modal({ open, handleClose, products }: any) {
+  const [create] = useCreateProductsCategoryMutation();
+  const onSubmit = ({ name, image, status, parent }: any) => {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("status", status);
+    formData.append("image", image);
+    if (parent !== undefined) {
+      formData.append("parent", parent);
+    }
+    create(formData);
     handleClose();
   };
   const { handleSubmit, getFieldMeta, setFieldValue, setFieldTouched } =
@@ -33,11 +65,13 @@ function Modal({ open, handleClose }: any) {
     });
 
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
-  const { data: regionsType, isLoading } = useGetRegionsTypeQuery({
-    offset: 0,
-    search: "",
-  });
-  if (isLoading) return <div />;
+  const [value, setValue] = useState(0);
+
+  // @ts-ignore
+  const handleChange = (event: any, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <Dialog
       className={styles.modal}
@@ -46,65 +80,39 @@ function Modal({ open, handleClose }: any) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <form onSubmit={handleSubmit}>
-        <DialogTitle>Health & Care</DialogTitle>
-        <DialogContent className={styles.content}>
-          <div className={styles.languages}>
-            <h4>Uzbek</h4>
-            <h4>Russian</h4>
-            <h4>Korean</h4>
-          </div>
-          <div className={styles.form}>
-            <h4>Category Information</h4>
-            <div className={styles.inputs}>
-              <div className={styles.select}>
-                <FormControl fullWidth className={styles.firstSelect}>
-                  <FormControlValidate
-                    label="Category Name"
-                    fieldName="categoryName"
-                    controls={formControls}
-                  />
-                </FormControl>
-              </div>
-              <div className={styles.formBottom}>
-                <div className={styles.select}>
-                  <FormControl fullWidth>
-                    <InputLabel>Category Of Category</InputLabel>
-                    <SelectControlValidate
-                      controls={formControls}
-                      fieldName="categoryOfCategory"
-                    >
-                      <MenuItem value={12}>bhjas</MenuItem>
-                    </SelectControlValidate>
-                  </FormControl>
-                </div>
-                <div className={styles.select}>
-                  <FormControl fullWidth>
-                    <InputLabel>Region type</InputLabel>
-                    <SelectControlValidate
-                      controls={formControls}
-                      fieldName="regionType"
-                    >
-                      {regionsType &&
-                        regionsType.results.map((el: any) => (
-                          <MenuItem key={el.id} value={el.id}>
-                            {el.name}
-                          </MenuItem>
-                        ))}
-                    </SelectControlValidate>
-                  </FormControl>
-                </div>
-              </div>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }} />
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>Health & Care</DialogTitle>
+          <DialogContent className={styles.content}>
+            <div className={styles.languages}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Uzbek" {...a11yProps(0)} />
+              </Tabs>
             </div>
-          </div>
-        </DialogContent>
-        <DialogActions className={styles.btns}>
-          <button type="reset" onClick={handleClose}>
-            Cancel
-          </button>
-          <button type="submit">Save</button>
-        </DialogActions>
-      </form>
+            <CustomTabPanel value={value} index={0}>
+              <div className={styles.form}>
+                <h4>Category Information</h4>
+                <ModalFormGroup
+                  formControls={formControls}
+                  products={products}
+                />
+              </div>
+              <DialogActions className={styles.btns}>
+                {/* eslint-disable-next-line react/button-has-type */}
+                <button type="reset" onClick={handleClose}>
+                  Cancel
+                </button>
+                <button type="submit">Save</button>
+              </DialogActions>
+            </CustomTabPanel>
+          </DialogContent>
+        </form>
+      </Box>
     </Dialog>
   );
 }

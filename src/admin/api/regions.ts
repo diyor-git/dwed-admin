@@ -3,23 +3,9 @@ import regionsCreatedApi from "./index.ts";
 export const regionsApi = regionsCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     getRegions: build.query({
-      query: ({ offset, search }: any) => ({
+      query: ({ offset, search, parent }: any) => ({
         url: `/GMS/api/v1.0/admin/region/`,
-        params: { parent: 0, limit: 10, offset, search, name },
-      }),
-      providesTags: ["Regions"],
-    }),
-    getRegionsSub: build.query({
-      query: ({ offset, id, search }: any) => ({
-        url: `/GMS/api/v1.0/admin/region/`,
-        params: { parent: id, limit: 10, offset, search },
-      }),
-      providesTags: ["Regions"],
-    }),
-    getRegionsFinal: build.query({
-      query: ({ offset, id, search }: any) => ({
-        url: `/GMS/api/v1.0/admin/region/`,
-        params: { parent: id, limit: 10, offset, search },
+        params: { parent, limit: 10, offset, search },
       }),
       providesTags: ["Regions"],
     }),
@@ -39,11 +25,17 @@ export const regionsApi = regionsCreatedApi.injectEndpoints({
       invalidatesTags: ["Regions"],
     }),
     createRegion: build.mutation({
-      query: ({ name, status, parent, type }: any) => ({
-        url: `/GMS/api/v1.0/admin/region/`,
-        method: "POST",
-        data: { name, status, parent: !parent ? 0 : parent, type },
-      }),
+      query: ({ name, status, parent, type }: any) => {
+        const data: any = { name, status, type };
+        if (parent !== undefined) {
+          data.parent = parent;
+        }
+        return {
+          url: `/GMS/api/v1.0/admin/region/`,
+          method: "POST",
+          data,
+        };
+      },
       invalidatesTags: ["Regions"],
     }),
     createRegionsType: build.mutation({
@@ -73,10 +65,8 @@ export const regionsApi = regionsCreatedApi.injectEndpoints({
 
 export const {
   useGetRegionsQuery,
-  useGetRegionsSubQuery,
   useDeleteRegionMutation,
   useGetRegionsTypeQuery,
-  useGetRegionsFinalQuery,
   useCreateRegionsTypeMutation,
   useCreateRegionMutation,
   useDeleteRegionsTypeMutation,

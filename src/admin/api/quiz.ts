@@ -3,18 +3,18 @@ import regionsCreatedApi from "./index.ts";
 export const quizApi = regionsCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     getQuiz: build.query({
-      query: ({ offset, search, id }: any) => ({
+      query: ({ offset, search, parent }: any) => ({
         url: `/QMS/api/v1.0/public/quiz/`,
-        params: { parent: id, limit: 10, offset, search },
+        params: { parent, limit: 10, offset, search },
       }),
       providesTags: ["Quiz"],
     }),
-    getQuizCategory: build.query({
-      query: ({ offset, search, id }: any) => ({
+    getQuizType: build.query({
+      query: ({ offset, search }: any) => ({
         url: `/QMS/api/v1.0/public/category/`,
-        params: { parent: id, limit: 10, offset, search },
+        params: { limit: 10, offset, search },
       }),
-      providesTags: ["Quiz"],
+      providesTags: ["QuizType"],
     }),
     deleteQuiz: build.mutation({
       query: ({ id }: any) => ({
@@ -57,6 +57,6 @@ export const {
   useCreateQuizTypeMutation,
   useDeleteQuizMutation,
   useDeleteQuizTypeMutation,
-  useGetQuizCategoryQuery,
+  useGetQuizTypeQuery,
   useCreateQuizMutation,
 } = quizApi;

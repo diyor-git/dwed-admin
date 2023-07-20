@@ -1,11 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
-import { Modal, Table } from "./components";
-import { Filter } from "../../../_components";
+import { Modal } from "./components";
+import {Filter, Table} from "../../../_components";
 import validationSchema from "./validationSchema.ts";
 import styles from "./index.module.scss";
-import { useGetOrderStatusQuery } from "../../api/orderstatus.ts";
+import {useDeleteOrderStatusMutation, useGetOrderStatusQuery} from "../../api/orderstatus.ts";
 
 function OrdersStatus() {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ function OrdersStatus() {
   };
 
   const {
-    data: products,
+    data: orders,
     isLoading,
     refetch,
   } = useGetOrderStatusQuery({ offset: page, search: searchItem });
@@ -55,6 +55,8 @@ function OrdersStatus() {
       validationSchema: validationSchema(),
     });
 
+  const [deleteOrder, { error }] = useDeleteOrderStatusMutation();
+
   const formControls = { getFieldMeta, setFieldValue, setFieldTouched };
 
   if (isLoading) return <div />;
@@ -77,9 +79,12 @@ function OrdersStatus() {
       <div className={styles.table}>
         <Table
           formControls={formControls}
+          rowsName={["ID", "Category name", "", "Who added", ""]}
           handleSubmit={handleSubmit}
           disableLinks
-          rows={products}
+          rows={orders}
+          error={error}
+          deleteMutation={deleteOrder}
           loading={loading}
           handleOpenFilter={handleOpenFilter}
           handleChangePage={handleChangePage}

@@ -3,23 +3,9 @@ import regionsCreatedApi from "./index.ts";
 export const productsApi = regionsCreatedApi.injectEndpoints({
   endpoints: (build) => ({
     getProducts: build.query({
-      query: ({ offset, search, limit = 10 }: any) => ({
+      query: ({ offset, search, limit = 10, parent }: any) => ({
         url: `/PMS/api/v1.0/admin/product_category/`,
-        params: { limit, offset, search },
-      }),
-      providesTags: ["Products"],
-    }),
-    getProductsSub: build.query({
-      query: ({ offset, search, limit = 10, id }: any) => ({
-        url: `/PMS/api/v1.0/admin/product_category/`,
-        params: { parent: id, limit, offset, search },
-      }),
-      providesTags: ["Products"],
-    }),
-    getProductsFinal: build.query({
-      query: ({ offset, search, limit = 10, id }: any) => ({
-        url: `/PMS/api/v1.0/admin/product_category/`,
-        params: { parent: id, limit, offset, search },
+        params: { limit, offset, search, parent },
       }),
       providesTags: ["Products"],
     }),
@@ -28,13 +14,13 @@ export const productsApi = regionsCreatedApi.injectEndpoints({
         url: `/PMS/api/v1.0/admin/product_type/`,
         params: { limit, offset, search },
       }),
-      providesTags: ["Products"],
+      providesTags: ["ProductsType"],
     }),
     getProductsCategory: build.query({
       query: ({ limit = 10 }) => ({
         url: `/PMS/api/v1.0/admin/product_category/?limit=${limit}`,
       }),
-      providesTags: ["Products"],
+      providesTags: ["ProductsCategory"],
     }),
     deleteProduct: build.mutation({
       query: ({ id }: any) => ({
@@ -75,8 +61,19 @@ export const productsApi = regionsCreatedApi.injectEndpoints({
       }),
       invalidatesTags: ["Products"],
     }),
+    createProductsCategory: build.mutation({
+      query: (formData: any) => ({
+        url: `/PMS/api/v1.0/admin/product_category/`,
+        method: "POST",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+      invalidatesTags: ["ProductsMeasure"],
+    }),
     getProductsMeasure: build.query({
-      query: ({ search = "", offset = "", limit = 10 }) => ({
+      query: ({ search, offset, limit = 10 }) => ({
         url: `/PMS/api/v1.0/admin/product_unit/`,
         params: { limit, offset, search },
       }),
@@ -95,7 +92,7 @@ export const productsApi = regionsCreatedApi.injectEndpoints({
         url: `/PMS/api/v1.0/admin/manufacturer/`,
         params: { offset, limit, search },
       }),
-      providesTags: ["Products"],
+      providesTags: ["ProductsManufacture"],
     }),
   }),
 });
@@ -105,10 +102,9 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useCreateProductsMeasureMutation,
-  useGetProductsFinalQuery,
   useGetProductsManufactureQuery,
   useGetProductsTypeQuery,
   useGetProductsCategoryQuery,
   useGetProductsMeasureQuery,
-  useGetProductsSubQuery,
+  useCreateProductsCategoryMutation,
 } = productsApi;

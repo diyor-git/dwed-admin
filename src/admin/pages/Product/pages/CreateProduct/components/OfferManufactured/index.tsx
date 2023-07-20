@@ -10,7 +10,7 @@ import { SelectControlValidate } from "../../../../../../../_components/Form";
 import { useGetProductsManufactureQuery } from "../../../../../../api/products.ts";
 
 function OfferManufactured({ formControls, handleChange, expanded }: any) {
-  const { data: manufacture } = useGetProductsManufactureQuery("");
+  const { data: manufacture } = useGetProductsManufactureQuery({search: ""});
   return (
     <Accordion
       expanded={expanded === "panel4"}

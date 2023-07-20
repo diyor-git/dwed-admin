@@ -1,26 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { useFormik } from "formik";
-import validationSchema from "../../validationSchema.ts";
-import { Filter } from "../../../../../_components";
-import { TableV2 } from "../../components";
-import styles from "../../index.module.scss";
 import { useGetProductsMeasureQuery } from "../../../../api/products.ts";
-import {Modal} from "./components";
+import { Modal } from "./components";
+import validationSchema from "../../../../components/SearchValidation";
+import { Table } from "../../../../../_components";
+import styles from "./index.module.scss";
 
 function ProductMeasure() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchItem, setSearchItem] = useState("");
-  const [, setFilterValue] = useState("");
-  const [openFilter, setOpenFilter] = useState(false);
 
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -59,13 +50,8 @@ function ProductMeasure() {
 
   if (isLoading) return <div />;
   return (
-    <div className={styles.regions}>
+    <div className={styles.measure}>
       <Modal open={open} handleClose={handleClose} />
-      <Filter
-        open={openFilter}
-        selectedValue={setFilterValue}
-        onClose={handleCloseFilter}
-      />
       <div className={styles.header}>
         <button type="button" onClick={handleClickOpen}>
           <AddIcon />
@@ -73,14 +59,16 @@ function ProductMeasure() {
         </button>
       </div>
       <div className={styles.table}>
-        <TableV2
+        <Table
+          rowsName={["ID", "Name"]}
           formControls={formControls}
           disableLinks
           handleSubmit={handleSubmit}
+          actions={false}
           rows={regions}
           loading={loading}
           handleChangePage={handleChangePage}
-          handleOpenFilter={handleOpenFilter}
+          handleOpenFilter={null}
         />
       </div>
     </div>

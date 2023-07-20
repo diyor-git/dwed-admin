@@ -9,8 +9,8 @@ import "./App.scss";
 const Auth = lazy(() => import("./auth"));
 const Admin = lazy(() => import("./admin"));
 
+const token = localStorage.getItem("accessToken");
 function App() {
-  const token = localStorage.getItem("accessToken");
   const { error }: any = useAccountQuery({ token });
   const navigate = useNavigate();
 

@@ -77,7 +77,7 @@ function Table({
       </div>
       <div className={styles.pagination}>
         <Pagination
-          count={Math.floor(rows.count / 10)}
+          count={Math.ceil(rows.count / 10)}
           variant="outlined"
           disabled={loading}
           onChange={handleChangePage}
